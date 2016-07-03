@@ -1,0 +1,10 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+h1 {
+    font-family: quicksand;
+    font-variant: lighter;
+    text-align: center;
+}

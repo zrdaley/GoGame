@@ -1,0 +1,109 @@
+/*****************************
+ *  ========General========  *
+ *****************************/
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+  padding-top: 50px;
+  margin-bottom: 60px;
+  background-image: url("../img/board1-90opac.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.main {
+  padding: 40px 15px;
+  text-align: center;
+}
+h1 {
+    color: white;
+    font-family: quicksand;
+    font-variant: lighter;
+    font-size: 3em;
+    background: url("../img/header-bg.png");
+    border-radius: 10px;
+    width: 500px;
+    text-align: center;
+    margin: 10% auto;
+}
+
+/****************************
+ *  ========Navbar========  *
+ ****************************/
+.navbar {
+    background-color: #333;
+}
+.navbar a:hover {
+    color: #333;
+    background-color: #fff;
+}
+li a {
+    color: #fff;
+    font-family: quicksand;
+    font-variant: lighter;
+    font-size: 1.1em;
+}
+.navbar-brand {
+    color: #fff;
+}
+.icon-bar {
+    background-color: #fff;
+}
+.navbar-toggle {
+    border-color: #fff;
+}
+button:hover {
+    box-shadow: 0 0 2px 2px white;
+}
+
+/**********************************
+ *  ========Main Buttons========  *
+ **********************************/
+.container > .text-center > button {
+    width: 317px;
+    height: 170px;
+    margin: 0 auto;
+    background-color: transparent;
+    border-color: #fff;
+}
+.container > .text-center > button:hover {
+    box-shadow: 0 0 5px 5px white;
+}
+#one-player-button {
+    margin-right: 3%;
+    background-image: url("../img/1player.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+#two-player-button {
+    margin-left: 3%;
+    background-image: url("../img/2player.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+/****************************
+ *  ========Footer========  *
+ ****************************/
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 40px;
+  background-color: #333;
+}
+.container .text-muted {
+  margin: 13px 0;
+  color: #fff;
+  font-family: quicksand;
+  font-variant: lighter;
+}
+.footer > .container {
+  padding-right: 15px;
+  padding-left: 15px;
+}
