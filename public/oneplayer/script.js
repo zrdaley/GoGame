@@ -26,6 +26,8 @@ function drawBoard(state){
 
             if (state.board[y1][x1] != 0)
                 svg.append(makeCircle(x, y, 20, state.board[y1][x1]));//makes a board
+            else//button to click to move
+                addTokenButton();
             y1++;
         }
         y1 = 0;
@@ -35,6 +37,12 @@ function drawBoard(state){
 
 
     canvas.append(svg);
+}
+
+function addTokenButton(){
+    //add a button
+    var tbutton = document.createElement('BUTTON');
+    document.body.appendChild(tbutton);
 }
 
 function init(){
