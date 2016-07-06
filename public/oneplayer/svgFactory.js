@@ -58,6 +58,7 @@ function makeRectangle(x, y, w, h, c){
    rect.setAttribute("height", w);
    rect.setAttribute("x", x);
    rect.setAttribute("y", y);
+   rect.style.fill = c;
    
    return rect; 
 }
@@ -76,12 +77,17 @@ function makeCircle(x, y, r, c){
 
    var circ = document.createElementNS(SVGNameSpace, "circle"); 
 
-    // Checkout docs at: http://www.w3schools.com/svg/svg_circle.asp
-    circ.setAttribute("cx", x);
-    circ.setAttribute("cy", y);
-    circ.setAttribute("r", r);
-    circ.setAttribute("fill", c)
-    circ.setAttribute("stroke", "black")
+   //c = 1 is a white token
+  if(c == 1){
+    circ.setAttribute("fill", "white");
+    circ.setAttribute("stroke", "black");
+    circ.setAttribute("stroke-width", 1);
+  }else if( c==2) //c = 2 is a black token
+    circ.setAttribute("fill", "black");
+  circ.setAttribute("cx", x);
+  circ.setAttribute("cy", y);
+  circ.setAttribute("r", r);
+  
 
    return circ;
 

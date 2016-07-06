@@ -1,101 +1,40 @@
 
 var boardState = null; 
 
-/**
- * Requests a new board state from the server's /data route.
- * 
- * @param cb {function} callback to call when the request comes back from the server.
- */
-function getData(cb){
-    $.get("/data", function(data, textStatus, xhr){
-        console.log("Response for /data: "+textStatus);  
-        console.log(data);
 
-        // handle any errors here....
-
-        // draw the board....
-
-        boardState = data; 
-
-        cb(data);  
-
-    }); 
-}
-
-/**
- * Draws the board to the #canvas element on the page. 
- *
- * You may find the following links helpful: 
- *  - https://api.jquery.com/
- *  - https://api.jquery.com/append/
- *  - http://www.tutorialspoint.com/jquery/
- *  - http://www.w3schools.com/jquery/ 
- *
- * @param state {object} - an object representing the state of the board.  
- */ 
 function drawBoard(state){
 
-    var canvas = $("#canvas");
-
-    canvas.html("") 
-
-    // Change the height and width of the board here...
-    // everything else should adapt to an adjustable
-    // height and width.
+    var canvas = $("#canvas"); 
+    //height and width of the board
     var W = 600, H = 600; 
     canvas.css("height", H); 
     canvas.css("width", W); 
-
-    // The actual SVG element to add to. 
-    // we make a jQuery object out of this, so that 
-    // we can manipulate it via calls to the jQuery API. 
     var svg = $(makeSVG(W, H));
+    svg.append(makeRectangle(0, 0, H, W, "#dab44a"));
 
-    var RAD = 0.8*(W/state.size/2); 
-    var MARG = RAD+10;
-    var V_SPACE = (W-MARG*2) / state.size; 
-    var H_SPACE = (H-MARG*2) / state.size; 
-    
-     
 
-    for(var i = 0; i < state.size; i++){
-        svg.append(makeLine(MARG+i*V_SPACE, MARG, MARG+(i*V_SPACE), H-V_SPACE-MARG, "black", 2))
-        svg.append(makeLine(MARG, MARG+i*H_SPACE, W-H_SPACE-MARG, MARG+i*H_SPACE, "black", 2))
-    }
+    var numOfPix = ((W-100)/(state.size-1));//so that the board has 50 pix of room on each side
 
-    for(var i = 0; i < state.size; i++){
-        for(var j = 0; j < state.size; j++){
-            
-            if(state.board[i][j] == 1){
-                svg.append(makeCircle(MARG+i*V_SPACE, MARG+j*H_SPACE, RAD, "black"));
-            }else if(state.board[i][j] == 2){
-                svg.append(makeCircle(MARG+i*V_SPACE, MARG+j*H_SPACE, RAD, "white"));
-            }
+    var x1 = 0;
+    var y1 = 0;
+    for(x = 50; x<(W-50); x += numOfPix){//50 to 550 with a 50 pix boarder
+        
+        for(y = 50; y<(W-50);y += numOfPix){
 
+            svg.append(makeLine(x, y, x+numOfPix, y));
+            svg.append(makeLine(x, y, x, y+numOfPix));
+
+            if (state.board[y1][x1] != 0)
+                svg.append(makeCircle(x, y, 20, state.board[y1][x1]));//makes a board
+            y1++;
         }
+        y1 = 0;
+        x1++;
     }
 
-    // append the svg object to the canvas object.
+
+
     canvas.append(svg);
-
-}
-
-function getMove(){
-
-    $.ajax({
-        type: 'POST',
-        url : '/move',
-        dataType: "json",
-        data : JSON.stringify(boardState), 
-        contentType : "application/json",
-        success : function(data){
-            console.log(data);
-            console.log(status);
-            boardState = data;
-            drawBoard(data);    
-        }
-    });
-
 }
 
 function init(){
@@ -104,21 +43,15 @@ function init(){
 
     console.log("Initalizing Page...."); 
     
-    drawBoard(generateBoard()); 
+    drawBoard(generateBoard(9)); 
 }
 
-function generateBoard(){
+
+function generateBoard(size){
 
     var state = {
-        size : 0, 
+        size : size, 
         board  : [],
-    }
-
-    var max = 9;
-    var min = 5;
-
-    while(state.size % 2 !== 1){
-        state.size = Math.floor(Math.random() * (max - min + 1)) + min; 
     }
 
     var tmp = []; 
@@ -130,8 +63,5 @@ function generateBoard(){
         state.board.push(tmp);
     }
 
-    boardState = state; 
-
     return state; 
-
 }
