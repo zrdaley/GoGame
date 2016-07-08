@@ -75,22 +75,27 @@ function makeRectangle(x, y, w, h, c){
 */
 function makeCircle(x, y, r, c){
 
-   var circ = document.createElementNS(SVGNameSpace, "circle"); 
+	var circ = document.createElementNS(SVGNameSpace, "circle"); 
 
    //c = 1 is a white token
-  if(c == 1){
-    circ.setAttribute("fill", "white");
-    circ.setAttribute("stroke", "black");
-    circ.setAttribute("stroke-width", 1);
-  }else if( c==2) //c = 2 is a black token
-    circ.setAttribute("fill", "black");
-  circ.setAttribute("cx", x);
-  circ.setAttribute("cy", y);
-  circ.setAttribute("r", r);
-  
-
-   return circ;
-
+	if(c == 1){
+    	circ.setAttribute("fill", "white");
+    	circ.setAttribute("stroke", "black");
+    	circ.setAttribute("stroke-width", 1);
+  	}else if( c==2) //c = 2 is a black token
+    	circ.setAttribute("fill", "black");
+    else{//c = 0 invisible circle
+    	circ.setAttribute("onmouseover","changeColor(this)");//for clicking
+		circ.setAttribute("onmouseout","changeColorBack(this)");
+		circ.setAttribute("onclick","makeMove(this)");
+    	circ.setAttribute("fill", "red");
+    	circ.setAttribute("fill-opacity", "0");//fill none didn't work, only way was to change opacity
+    }
+	circ.setAttribute("cx", x);
+	circ.setAttribute("cy", y);
+	circ.setAttribute("r", r);
+	
+	return circ;
 }
 
 /**
