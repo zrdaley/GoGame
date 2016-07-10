@@ -1,5 +1,5 @@
 var boardState = null; 
-
+var checkMove = 0;// starts with black
 
 function drawBoard(state){
 
@@ -72,18 +72,39 @@ function drawBoard(state){
 
 //on mouse over for clicking
 function changeColor(x){
+	//checks who goes
+	if (checkMove == 0){
+		x.setAttribute("fill", "black");
+	}else{
+		x.setAttribute("fill", "white");
+		x.setAttribute("stroke", "black");
+    	x.setAttribute("stroke-width", 1);
+	}
 	x.setAttribute("fill-opacity", "1");
 }
 
 function changeColorBack(x){
+	x.removeAttribute("stroke");
 	x.setAttribute("fill-opacity", "0");
 }
 
-function makeMove(x){
-	x.setAttribute("fill", "black");
-	x.setAttribute("fill-opacity", "1");
-	x.setAttribute("onmouseover","");//to nothing
-	x.setAttribute("onmouseout","");
+
+//on mouse click
+function makeMove(x,cx,cy){//coordinates x (cx), coordinates y (cy)
+	//checks who goes
+	if (checkMove == 0){
+		x.setAttribute("fill", "black");
+		checkMove = 1;
+	}else{
+		x.setAttribute("fill", "white");
+		x.setAttribute("stroke", "black");
+    	x.setAttribute("stroke-width", 1);
+		checkMove = 0;
+	}
+	x.removeAttribute("fill-opacity");
+	x.removeAttribute("onmouseover");
+	x.removeAttribute("onmouseout");
+	x.removeAttribute("onclick");
 }
 
 
@@ -93,6 +114,7 @@ function init(){
     
     drawBoard(generateBoard(9)); 
 }
+
 
 
 function generateBoard(size){

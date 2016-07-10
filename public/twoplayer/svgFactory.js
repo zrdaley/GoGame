@@ -88,7 +88,6 @@ function makeCircle(x, y, r, c){
     	circ.setAttribute("onmouseover","changeColor(this)");//for clicking
 		circ.setAttribute("onmouseout","changeColorBack(this)");
 		circ.setAttribute("onclick","makeMove(this)");
-    	circ.setAttribute("fill", "red");
     	circ.setAttribute("fill-opacity", "0");//fill none didn't work, only way was to change opacity
     }
 	circ.setAttribute("cx", x);
