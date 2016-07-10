@@ -1,0 +1,115 @@
+/*****************************
+ *  ========General========  *
+ *****************************/
+ html {
+     position: relative;
+     min-height: 100%;
+ }
+
+ body {
+     padding-top: 50px;
+     margin-bottom: 60px;
+ }
+
+ /***************************
+  *  ========Board========  *
+  ***************************/
+#canvas{
+    width:800px;
+    height:800px;
+    margin:0 auto;
+    /* fix box-shadow resizing problem */
+    box-shadow: 0 0 10px 10px #333;
+}
+
+.infoUI {
+    /*background: green;*/
+    font-family: quicksand;
+    font-variant: lighter;
+    font-size: 1.2em;
+    width: 100%;
+    border: solid 1px black;
+    border-radius: 5px;
+    padding: 10px 0px 10px 15px;
+    margin-bottom: 5%;
+    margin-left: -17.5%;
+}
+
+/**********************************
+ *  ========Main Buttons========  *
+ **********************************/
+#pass-btn {
+    background: #333;
+    margin: 0 auto;
+    width: 100%;
+    height: 65px;
+    font-family: quicksand;
+    font-variant: lighter;
+    font-size: 1.2em;
+}
+#pass-btn:hover {
+    background: #ff4e50;
+    color: #333;
+    border: solid 1px #333;
+}
+.btn-class {
+    width: 150px;
+    float: left;
+}
+.test-class {
+    margin-top: 60px;
+}
+.test-class > .col-md-3 {
+    margin-top: 20%;
+}
+
+/****************************
+ *  ========Navbar========  *
+ ****************************/
+.navbar {
+    background-color: #333;
+}
+.navbar a:hover {
+    color: #333;
+    background-color: #fff;
+}
+li a {
+    color: #fff;
+    font-family: quicksand;
+    font-variant: lighter;
+    font-size: 1.1em;
+}
+.navbar-brand {
+    color: #fff;
+}
+.icon-bar {
+    background-color: #fff;
+}
+.navbar-toggle {
+    border-color: #fff;
+}
+.navbar-header > button:hover {
+    box-shadow: 0 0 2px 2px white;
+}
+
+/****************************
+ *  ========Footer========  *
+ ****************************/
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 40px;
+  background-color: #333;
+}
+.container .text-muted {
+  margin: 13px 0;
+  color: #fff;
+  font-family: quicksand;
+  font-variant: lighter;
+}
+.footer > .container {
+  padding-right: 15px;
+  padding-left: 15px;
+}
