@@ -116,7 +116,7 @@ function init(){
     console.log(boardSize);
 
 
-    drawBoard(generateBoard(boardSize));
+    drawBoard(generateBoard(9));
 }
 
 
