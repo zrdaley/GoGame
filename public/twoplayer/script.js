@@ -1,5 +1,27 @@
-var boardState = null; 
 var checkMove = 2;// starts with black
+
+
+var state = {
+   "size": 0,
+   "board": [],
+   "last": 0,
+}
+
+
+//working on this for board size from dropdown
+function setBoard(size) {
+    
+    state.size = size;
+
+    //send board state to the server
+    var postXhr = new XMLHttpRequest();
+    postXhr.open("POST", "/board", true);
+    postXhr.setRequestHeader("Content-type", "application/json");
+    postXhr.responseType = 'text';
+    postXhr.send(JSON.stringify(state));
+}
+
+
 
 function drawBoard(state){
 
@@ -18,10 +40,10 @@ function drawBoard(state){
     var tsize;
     if(state.size == 9)
     tsize = 20;
-    else if(state.size == 11)
-    tsize = 17;
-    else//size is 13
-	tsize = 15;
+    else if(state.size == 13)
+    tsize = 13;
+    else//size is 19
+	tsize = 9;
 	
 	
     var x1 = 0;
@@ -91,7 +113,7 @@ function changeColorBack(x){
 
 //on mouse click
 function makeMove(x){
-	boardState.board[x.getAttribute("coory")][x.getAttribute("coorx")] = checkMove;
+	state.board[x.getAttribute("coory")][x.getAttribute("coorx")] = checkMove;
 	//checks who goes
 	if (checkMove == 2){
 		x.setAttribute("fill", "black");
@@ -110,25 +132,29 @@ function makeMove(x){
 
 //pass
 function getMove(){
-	console.log(boardState.board);
+	console.log(state.board);
 }
 
 
 function init(){
+    var temp;
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "/board", true);
+    xhr.send();
 
-    console.log("Initalizing Page...."); 
-    boardState = generateBoard(9);
-    drawBoard(boardState); 
+    xhr.onreadystatechange = function() {
+        if(xhr.readyState == 4 && xhr.status == 200) {
+            temp = JSON.parse(xhr.responseText);
+            state.size = temp["size"];
+            drawBoard(generateBoard(state.size));
+            console.log("Creating board of size: " + state.size);
+        }
+    }
 }
 
 
 
 function generateBoard(size){
-
-    var state = {
-        size : size, 
-        board  : [],//if there is a token
-    }
 
     var tmp = []; 
     for(var i = 0; i < state.size; i++){
