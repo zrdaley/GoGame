@@ -1,11 +1,16 @@
 var checkMove = 2;// starts with black
 
+var postXhr = new XMLHttpRequest();
+var xhr = new XMLHttpRequest();
+
 
 var state = {
    "size": 0,
    "board": [],
    "last": 0,
+   "handiCap": false,
 }
+
 
 
 //working on this for board size from dropdown
@@ -14,13 +19,25 @@ function setBoard(size) {
     state.size = size;
 
     //send board state to the server
-    var postXhr = new XMLHttpRequest();
     postXhr.open("POST", "/board", true);
     postXhr.setRequestHeader("Content-type", "application/json");
     postXhr.responseType = 'text';
     postXhr.send(JSON.stringify(state));
 }
 
+function handiCap(element) {
+   if(element.checked){
+        state.handiCap = true;
+   }
+   else {
+        state.handiCap = false;
+   }
+    //send board state to the server
+    postXhr.open("POST", "/board", true);
+    postXhr.setRequestHeader("Content-type", "application/json");
+    postXhr.responseType = 'text';
+    postXhr.send(JSON.stringify(state));
+}
 
 
 function drawBoard(state){
@@ -138,7 +155,6 @@ function getMove(){
 
 function init(){
     var temp;
-    var xhr = new XMLHttpRequest();
     xhr.open("GET", "/board", true);
     xhr.send();
 
@@ -146,6 +162,9 @@ function init(){
         if(xhr.readyState == 4 && xhr.status == 200) {
             temp = JSON.parse(xhr.responseText);
             state.size = temp["size"];
+            state.board = temp["board"];
+            state.last = temp["last"];
+            state.handiCap = temp["handiCap"];
             drawBoard(generateBoard(state.size));
             console.log("Creating board of size: " + state.size);
         }
@@ -157,10 +176,33 @@ function init(){
 function generateBoard(size){
 
     var tmp = []; 
+    
+    // determined locations where HandiCap tokens should be put
+    var hcToken = Math.round((state.size)/3); 
+    var hcTokenSecond;
+    if(state.size == 9) {       
+        hcToken--;
+        hcTokenSecond = 3*hcToken;
+    } 
+    else
+        hcTokenSecond = 2*hcToken;
+       
+
+    console.log(hcToken);
+    var hc = state.handiCap;
+    var set = false;
+
     for(var i = 0; i < state.size; i++){
         tmp = []; 
+        if(i == hcToken || i == hcTokenSecond)
+            set = true;
+        else
+            set = false;
         for(var j = 0; j < state.size; j++){
-            tmp.push(0);
+            if(hc == true && set == true && (j == hcToken || j == hcTokenSecond))
+                tmp.push(1);
+            else
+                tmp.push(0);
         }
         state.board.push(tmp);
     }
