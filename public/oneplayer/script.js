@@ -1,15 +1,23 @@
 var boardState = null;
-var boardSize;
+
+var board = {
+   "size": "0",
+   "board": "0",
+   "last": "0",
+}
+
 
 //working on this for board size from dropdown
 function setBoard(size) {
-    var newSize = size;
+    
+    board.size = size;
+
+    //send board state to the server
     var postXhr = new XMLHttpRequest();
-    postXhr.open("POST", "/dog", true);
+    postXhr.open("POST", "/board", true);
     postXhr.setRequestHeader("Content-type", "application/json");
     postXhr.responseType = 'text';
-    postXhr.send(JSON.stringify(newSize));
-    // alert("Board size set!");
+    postXhr.send(JSON.stringify(board));
 }
 
 function drawBoard(state){
@@ -99,24 +107,19 @@ function makeMove(x){
 
 //part of board size from dropdown
 function init(){
-
-    console.log("Initalizing Page....");
-    console.log("Board Size: " + boardSize);
+    var temp;
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", "/dog", true);
+    xhr.open("GET", "/board", true);
     xhr.send();
 
     xhr.onreadystatechange = function() {
         if(xhr.readyState == 4 && xhr.status == 200) {
-            console.log("Response: " + JSON.parse(xhr.responseText));
-            boardsize = JSON.parse(xhr.responseText);
+            temp = JSON.parse(xhr.responseText);
+            board.size = temp["size"];
+            drawBoard(generateBoard(board.size));
+            console.log("Creating board of size: " + board.size);
         }
     }
-
-    console.log(boardSize);
-
-
-    drawBoard(generateBoard(9));
 }
 
 
