@@ -26,9 +26,9 @@ class ServerInterface{
         }
 	}
 
-	addAccount(name, password, cb){
+	addAccount(name, password,win, cb){
 		this._sendDatta(
-			{name: name, password: password}, "/add",
+			{name: name, password: password, win: win}, "/add",
 			function(err){
 				if(err){
 					console.log("Error adding Account: "+ err);
