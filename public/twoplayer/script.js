@@ -136,15 +136,30 @@ function changeColorBack(x){
 
 //on mouse click
 function makeMove(x){
-	state.board[x.getAttribute("coory")][x.getAttribute("coorx")] = checkMove;
-	//checks who goes
+	
+    //decrypt coordinate of placed token
+    var numOfPix = ((500)/(state.size-1));
+    var yCoord = Math.round(((x.cx.baseVal.value) / numOfPix) - 0.8);
+    var xCoord = Math.round(((x.cy.baseVal.value) / numOfPix) - 0.8);
+    console.log(xCoord);
+    console.log(yCoord);
+
+    //update last
+    state.last.x = xCoord;
+    state.last.y = yCoord;
+
+    //checks who goes
 	if (checkMove == 2){
 		x.setAttribute("fill", "black");
+        //update board
+        state.board[xCoord][yCoord] = 2;
 		checkMove = 1;
 	}else{
 		x.setAttribute("fill", "white");
 		x.setAttribute("stroke", "black");
     	x.setAttribute("stroke-width", 1);
+        //update board
+        state.board[xCoord][yCoord] = 1;
 		checkMove = 2;
 	}
 	x.removeAttribute("fill-opacity");
@@ -152,20 +167,8 @@ function makeMove(x){
 	x.removeAttribute("onmouseout");
 	x.removeAttribute("onclick");
 
-    //decrypt coordinate of placed token
-    var numOfPix = ((500)/(state.size-1));
-    var yCoord = Math.round(((x.cx.baseVal.value) / numOfPix) - 0.8);
-    var xCoord = Math.round(((x.cy.baseVal.value) / numOfPix) - 0.8);
-    console.log(xCoord);
-    console.log(yCoord);
-    
-    //update board state
-    state.board[xCoord][yCoord] = checkMove;
     console.log(state.board);
-    state.last.x = xCoord;
-    state.last.y = yCoord;
-    console.log(state.last);
-
+ 
     //send updated state to server
     postXhr.open("POST", "/board", true);
     postXhr.setRequestHeader("Content-type", "application/json");
@@ -197,7 +200,7 @@ function init(){
             if(state.refresh == false)
                 drawBoard(generateBoard(state.size));
             else
-                drawBoard(state.size);
+                drawBoard(state);
         }
     }
 }
@@ -239,7 +242,7 @@ function generateBoard(size){
     }
 
     //prevent duplicate boards
-    state.refresh == true;
+    state.refresh = true;
     postXhr.open("POST", "/board", true);
     postXhr.setRequestHeader("Content-type", "application/json");
     postXhr.responseType = 'text';

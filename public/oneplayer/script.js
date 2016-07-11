@@ -28,6 +28,7 @@ function setBoard(size) {
     postXhr.send(JSON.stringify(state));
 }
 
+
 function handiCap(element) {
    if(element.checked){
         state.handiCap = true;
@@ -168,7 +169,7 @@ function init(){
             if(state.refresh == false)
                 drawBoard(generateBoard(state.size));
             else
-                drawBoard(state.size);
+                drawBoard(state);
         
         }
     }
@@ -208,7 +209,7 @@ function generateBoard(size){
         state.board.push(tmp);
     }
     //prevent duplicate boards
-    state.refresh == true;
+    state.refresh = true;
     postXhr.open("POST", "/board", true);
     postXhr.setRequestHeader("Content-type", "application/json");
     postXhr.responseType = 'text';
@@ -226,3 +227,11 @@ function isValid(board,move){
 	}
 	return true;
 }
+
+function logoutConfirm() {
+    if(window.confirm('Really log out and go to home page? Current game progress will be LOST.')){
+        window.location.href="../index.html";
+    }
+}
+
+
