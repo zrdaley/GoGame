@@ -9,7 +9,7 @@ var board = {
 
 //working on this for board size from dropdown
 function setBoard(size) {
-    
+
     board.size = size;
 
     //send board state to the server
@@ -150,4 +150,10 @@ function isValid(board,move){
 		return false;
 	}
 	return true;
+}
+
+function logoutConfirm() {
+    if(window.confirm('Really log out and go to home page? Current game progress will be LOST.')){
+        window.location.href="../index.html";
+    }
 }
