@@ -1,23 +1,45 @@
-var boardState = null;
 
-var board = {
-   "size": "0",
-   "board": "0",
-   "last": "0",
+var postXhr = new XMLHttpRequest();
+var xhr = new XMLHttpRequest();
+
+var state = {
+   "size": 0,
+   "board": [],
+   "last": {
+        "x" : 0,
+        "y" : 0,
+        "c" : 2,
+        "pass" : false,
+    },
+   "handiCap": false,
+   "refresh": false,
 }
 
 
 //working on this for board size from dropdown
 function setBoard(size) {
     
-    board.size = size;
-
+    state.size = size;
     //send board state to the server
-    var postXhr = new XMLHttpRequest();
+
     postXhr.open("POST", "/board", true);
     postXhr.setRequestHeader("Content-type", "application/json");
     postXhr.responseType = 'text';
-    postXhr.send(JSON.stringify(board));
+    postXhr.send(JSON.stringify(state));
+}
+
+function handiCap(element) {
+   if(element.checked){
+        state.handiCap = true;
+   }
+   else {
+        state.handiCap = false;
+   }
+    //send board state to the server
+    postXhr.open("POST", "/board", true);
+    postXhr.setRequestHeader("Content-type", "application/json");
+    postXhr.responseType = 'text';
+    postXhr.send(JSON.stringify(state));
 }
 
 function drawBoard(state){
@@ -103,43 +125,96 @@ function makeMove(x){
 	x.setAttribute("fill-opacity", "1");
 	x.setAttribute("onmouseover","");//to nothing
 	x.setAttribute("onmouseout","");
+
+   //decrypt coordinate of placed token
+    var numOfPix = ((500)/(state.size-1));
+    var yCoord = Math.round(((x.cx.baseVal.value) / numOfPix) - 0.8);
+    var xCoord = Math.round(((x.cy.baseVal.value) / numOfPix) - 0.8);
+    console.log(xCoord);
+    console.log(yCoord);
+    
+    //update board state
+    state.board[xCoord][yCoord] = 2;
+    console.log(state.board);
+    state.last.x = xCoord;
+    state.last.y = yCoord;
+    console.log(state.last);
+
+    //send updated state to server
+    postXhr.open("POST", "/board", true);
+    postXhr.setRequestHeader("Content-type", "application/json");
+    postXhr.responseType = 'text';
+    postXhr.send(JSON.stringify(state));
+
+    //call AI
+
 }
 
 //part of board size from dropdown
 function init(){
     var temp;
-    var xhr = new XMLHttpRequest();
     xhr.open("GET", "/board", true);
     xhr.send();
 
     xhr.onreadystatechange = function() {
         if(xhr.readyState == 4 && xhr.status == 200) {
             temp = JSON.parse(xhr.responseText);
-            board.size = temp["size"];
-            drawBoard(generateBoard(board.size));
-            console.log("Creating board of size: " + board.size);
+            state.size = temp["size"];
+            state.board = temp["board"];
+            state.last = temp["last"];
+            state.handiCap = temp["handiCap"];
+            state.refresh = temp["refresh"];
+            //create board and prevent new board from being created
+            if(state.refresh == false)
+                drawBoard(generateBoard(state.size));
+            else
+                drawBoard(state.size);
+        
         }
     }
 }
 
 
-function generateBoard(size){
+function generateBoard(size){    
+    var tmp = []; 
+    
+    // determined locations where HandiCap tokens should be put
+    var hcToken = Math.round((state.size)/3); 
+    var hcTokenSecond;
+    if(state.size == 9) {       
+        hcToken--;
+        hcTokenSecond = 3*hcToken;
+    } 
+    else
+        hcTokenSecond = 2*hcToken;
+       
 
-    var state = {
-        size : size,
-        board  : [],
-    }
+    console.log(hcToken);
+    var hc = state.handiCap;
+    var set = false;
 
-    var tmp = [];
     for(var i = 0; i < state.size; i++){
-        tmp = [];
+        tmp = []; 
+        if(i == hcToken || i == hcTokenSecond)
+            set = true;
+        else
+            set = false;
         for(var j = 0; j < state.size; j++){
-            tmp.push(0);
+            if(hc == true && set == true && (j == hcToken || j == hcTokenSecond))
+                tmp.push(1);
+            else
+                tmp.push(0);
         }
         state.board.push(tmp);
     }
-
-    return state;
+    //prevent duplicate boards
+    state.refresh == true;
+    postXhr.open("POST", "/board", true);
+    postXhr.setRequestHeader("Content-type", "application/json");
+    postXhr.responseType = 'text';
+    postXhr.send(JSON.stringify(state));
+    
+    return state; 
 }
 
 function isValid(board,move){

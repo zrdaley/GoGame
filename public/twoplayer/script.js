@@ -7,8 +7,14 @@ var xhr = new XMLHttpRequest();
 var state = {
    "size": 0,
    "board": [],
-   "last": 0,
+   "last": {
+        "x" : 0,
+        "y" : 0,
+        "c" : 2,
+        "pass" : false,
+    },
    "handiCap": false,
+   "refresh": false,
 }
 
 
@@ -145,6 +151,27 @@ function makeMove(x){
 	x.removeAttribute("onmouseover");
 	x.removeAttribute("onmouseout");
 	x.removeAttribute("onclick");
+
+    //decrypt coordinate of placed token
+    var numOfPix = ((500)/(state.size-1));
+    var yCoord = Math.round(((x.cx.baseVal.value) / numOfPix) - 0.8);
+    var xCoord = Math.round(((x.cy.baseVal.value) / numOfPix) - 0.8);
+    console.log(xCoord);
+    console.log(yCoord);
+    
+    //update board state
+    state.board[xCoord][yCoord] = checkMove;
+    console.log(state.board);
+    state.last.x = xCoord;
+    state.last.y = yCoord;
+    console.log(state.last);
+
+    //send updated state to server
+    postXhr.open("POST", "/board", true);
+    postXhr.setRequestHeader("Content-type", "application/json");
+    postXhr.responseType = 'text';
+    postXhr.send(JSON.stringify(state));
+
 }
 
 //pass
@@ -165,8 +192,12 @@ function init(){
             state.board = temp["board"];
             state.last = temp["last"];
             state.handiCap = temp["handiCap"];
-            drawBoard(generateBoard(state.size));
-            console.log("Creating board of size: " + state.size);
+            state.refresh = temp["refresh"];
+            //create board and prevent new board from being created
+            if(state.refresh == false)
+                drawBoard(generateBoard(state.size));
+            else
+                drawBoard(state.size);
         }
     }
 }
@@ -206,6 +237,13 @@ function generateBoard(size){
         }
         state.board.push(tmp);
     }
+
+    //prevent duplicate boards
+    state.refresh == true;
+    postXhr.open("POST", "/board", true);
+    postXhr.setRequestHeader("Content-type", "application/json");
+    postXhr.responseType = 'text';
+    postXhr.send(JSON.stringify(state));
 
     return state; 
 }
