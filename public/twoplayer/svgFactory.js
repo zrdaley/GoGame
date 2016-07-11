@@ -73,7 +73,7 @@ function makeRectangle(x, y, w, h, c){
 * 
 * @return {object} 
 */
-function makeCircle(x, y, r, c){
+function makeCircle(x, y, r, c,coorx,coory){
 
 	var circ = document.createElementNS(SVGNameSpace, "circle"); 
 
@@ -90,6 +90,8 @@ function makeCircle(x, y, r, c){
 		circ.setAttribute("onclick","makeMove(this)");
     	circ.setAttribute("fill-opacity", "0");//fill none didn't work, only way was to change opacity
     }
+    circ.setAttribute("coorx", coorx);
+    circ.setAttribute("coory", coorx);
 	circ.setAttribute("cx", x);
 	circ.setAttribute("cy", y);
 	circ.setAttribute("r", r);
