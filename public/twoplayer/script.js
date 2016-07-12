@@ -21,7 +21,7 @@ var state = {
 
 //working on this for board size from dropdown
 function setBoard(size) {
-    
+
     state.size = size;
 
     //send board state to the server
@@ -48,17 +48,17 @@ function handiCap(element) {
 
 function drawBoard(state){
 
-    var canvas = $("#canvas"); 
+    var canvas = $("#canvas");
     //height and width of the board
-    var W = 600, H = 600; 
-    canvas.css("height", H); 
-    canvas.css("width", W); 
+    var W = 600, H = 600;
+    canvas.css("height", H);
+    canvas.css("width", W);
     var svg = $(makeSVG(W, H));
     svg.append(makeRectangle(0, 0, H, W, "#dab44a"));
 
 
     var numOfPix = ((W-100)/(state.size-1));//so that the board has 50 pix of room on each side
-    
+
     //token size
     var tsize;
     if(state.size == 9)
@@ -67,14 +67,14 @@ function drawBoard(state){
     tsize = 13;
     else//size is 19
 	tsize = 9;
-	
-	
+
+
     var x1 = 0;
     var y1 = 0;
-    
+
     //makes the majority of the board
     for(x = 50; x<(W-50); x += numOfPix){//50 to 550 with a 50 pix boarder
-        
+
         for(y = 50; y<(W-50);y += numOfPix){
 
             svg.append(makeLine(x, y, x+numOfPix, y));
@@ -87,7 +87,7 @@ function drawBoard(state){
         x1++;
     }
 
-	
+
 	//makes the last x line (bottom line)
 	var x1 = 0;
 	for(x = 50; x<(W-50); x += numOfPix){//50 to 550 with a 50 pix boarder
@@ -96,7 +96,7 @@ function drawBoard(state){
         svg.append(makeCircle(x, W-50, tsize, state.board[state.size-1][x1],x1,y1));//bottom of the y array
         x1++;
     }
-    
+
     //makes the last y line (right line)
 	var y1 = 0;
 	for(y = 50; y<(W-50); y += numOfPix){//50 to 550 with a 50 pix boarder
@@ -105,7 +105,7 @@ function drawBoard(state){
         svg.append(makeCircle(W-50,y, tsize, state.board[y1][state.size-1],x1,y1));//right of the x array
         y1++;
     }
-    
+
     //makes the last circle at the bottom right
     svg.append(makeCircle(W-50,W-50, tsize, state.board[state.size-1][state.size-1],x1,y1));
 
@@ -136,7 +136,7 @@ function changeColorBack(x){
 
 //on mouse click
 function makeMove(x){
-	
+
     //decrypt coordinate of placed token
     var numOfPix = ((500)/(state.size-1));
     var yCoord = Math.round(((x.cx.baseVal.value) / numOfPix) - 0.8);
@@ -168,7 +168,7 @@ function makeMove(x){
 	x.removeAttribute("onclick");
 
     console.log(state.board);
- 
+
     //send updated state to server
     postXhr.open("POST", "/board", true);
     postXhr.setRequestHeader("Content-type", "application/json");
@@ -209,25 +209,25 @@ function init(){
 
 function generateBoard(size){
 
-    var tmp = []; 
-    
+    var tmp = [];
+
     // determined locations where HandiCap tokens should be put
-    var hcToken = Math.round((state.size)/3); 
+    var hcToken = Math.round((state.size)/3);
     var hcTokenSecond;
-    if(state.size == 9) {       
+    if(state.size == 9) {
         hcToken--;
         hcTokenSecond = 3*hcToken;
-    } 
+    }
     else
         hcTokenSecond = 2*hcToken;
-       
+
 
     console.log(hcToken);
     var hc = state.handiCap;
     var set = false;
 
     for(var i = 0; i < state.size; i++){
-        tmp = []; 
+        tmp = [];
         if(i == hcToken || i == hcTokenSecond)
             set = true;
         else
@@ -248,7 +248,7 @@ function generateBoard(size){
     postXhr.responseType = 'text';
     postXhr.send(JSON.stringify(state));
 
-    return state; 
+    return state;
 }
 
 function isValid(board,move){
@@ -259,4 +259,10 @@ function isValid(board,move){
 		return false;
 	}
 	return true;
+}
+
+function logoutConfirm() {
+    if(window.confirm('Really log out and go to home page? Current game progress will be LOST.')){
+        window.location.href="../index.html";
+    }
 }
