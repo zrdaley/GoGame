@@ -60,10 +60,10 @@ function drawBoard(state){
     var tsize;
     if(state.size == 9)
     tsize = 20;
-    else if(state.size == 11)
-    tsize = 17;
+    else if(state.size == 13)
+    tsize = 15;
     else//size is 13
-	tsize = 15;
+	tsize = 13;
 
 
     var x1 = 0;
