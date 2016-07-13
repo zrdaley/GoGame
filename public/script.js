@@ -4,6 +4,7 @@ var currentAccount = null;
 
 // create a new object for accessing the server
 var serverInterface = new ServerInterface("localhost", 30110);
+
 //alert("hello01");
 function createAccount(){
 
@@ -88,6 +89,7 @@ function searchAccount(object){
 
 
 }
+
 
 function init(){
 	console.log("initializing go application");
