@@ -18,7 +18,7 @@ var state = {
 }
 
 // add wins to page
-document.getElementById('wins').innerHTML = "Wins: "; // + account win value
+// document.getElementById('wins').innerHTML = "Wins: "; // + account win value
 
 
 function checkOnePlyrBoard() {
