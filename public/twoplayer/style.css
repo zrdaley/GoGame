@@ -15,8 +15,8 @@
   *  ========Board========  *
   ***************************/
 #canvas{
-    width:800px;
-    height:800px;
+    width:600px;
+    height:600px;
     margin:0 auto;
     /* fix box-shadow resizing problem */
     box-shadow: 0 0 10px 10px #333;
