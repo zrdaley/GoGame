@@ -76,9 +76,7 @@ function getMove(){
 
 function gameOver(){
 	//need to count points and display them somewhere
-
-	var canvas = $("#canvas");
-    canvas[0].childNodes[0].childNodes[0].style.fill =("red");
+    colorBoard ="red";
 }
 
 //Upon AI request return
@@ -88,13 +86,15 @@ AIMove.onreadystatechange = function() {
             var move = JSON.parse(AIMove.responseText);
             //update last
             if (!move["pass"]){//if AI did not pass
-            	console.log("AI did not pass");
             	state.board[move["x"]][move["y"]] = move["c"];
     			state.last.x = move["x"];
     			state.last.y = move["y"];
     			state.last.pass = false;
     		}else{//if AI did pass
     			console.log("AI did pass");
+    			if (state.last.pass == true){//two passes in a row = gameOver
+    				gameOver();
+    			}
     			state.last.x = 0;
     			state.last.y = 0;
 				state.last.pass = true;

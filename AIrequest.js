@@ -1,7 +1,6 @@
 
 function getRandomMove(size, board, x, y, c, pass, cb){
 	var http = require('http');
-
 	var postData = {
 		'size':  size,
 		'board': board,
@@ -13,7 +12,6 @@ function getRandomMove(size, board, x, y, c, pass, cb){
     }
 	}
 	var move;
-	
 	var options = {
 		host:'roberts.seng.uvic.ca',
 		path:'/ai/maxLibs',
@@ -33,7 +31,11 @@ function getRandomMove(size, board, x, y, c, pass, cb){
 		response.on('end', function(){
 			console.log('end');
 			console.log(string);
-			cb(JSON.parse(string));
+			if(response.statusCode === 200){
+				cb(JSON.parse(string));
+			}else{
+				console.log("The status code does not equal 200, in AIrequest.js");
+			}
 		});
 	}
 
