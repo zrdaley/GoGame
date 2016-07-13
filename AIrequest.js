@@ -16,7 +16,7 @@ function getRandomMove(size, board, x, y, c, pass, cb){
 	
 	var options = {
 		host:'roberts.seng.uvic.ca',
-		path:'/ai/random',
+		path:'/ai/maxLibs',
 		port: '30000',
 		method: 'POST',
 		headers:{
