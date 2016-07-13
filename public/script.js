@@ -4,7 +4,7 @@ var currentAccount = null;
 
 // create a new object for accessing the server
 var serverInterface = new ServerInterface("localhost", 30110);
-//alert("hello01");
+
 function createAccount(){
 
 	//alert("hi");
@@ -14,11 +14,11 @@ function createAccount(){
 	var confirm_password = document.getElementById("confirmPassword").value;
 	var win = 0; // 0 is initial for first account, no win, no lose
 	if(!name || ! password){
-		//alert("please enter the password or name!");
+		alert("Please enter a username and password.");
 	}else{
 		var n = password.localeCompare(confirm_password);
 		if(n != 0){
-			alert("the password does not match, please enter password again");
+			alert("Invalid password! Please try again.");
 		}else{
 
 
@@ -53,7 +53,7 @@ function createAccount(){
 			//document.getElementById("create").disabled = true;
 			//document.getElementById("newUserName").value = "";
 			//document.getElementById("newPassword").value = "";
-			alert("congradualation, you have successfully created an account, let go to login page!!!");
+			alert("Account creation successful!");
 			//currentAccount = null;
 			confirmPassword.value = '';
 			newUserName.value = '';
@@ -90,7 +90,7 @@ function searchAccount(object){
 }
 
 function init(){
-	console.log("initializing go application");
+	console.log("Initializing Go application...");
 
 	serverInterface.getData(function(err, data){
 		if(err){
