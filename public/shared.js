@@ -2,6 +2,7 @@
 
 var postXhr = new XMLHttpRequest();
 var xhr = new XMLHttpRequest();
+var colorBoard = "#dab44a";//base color
 
 var state = {
    "size": 0,
@@ -25,7 +26,7 @@ function drawBoard(state){
     canvas.css("width", W);
 
     var svg = $(makeSVG(W, H));
-    svg.append(makeRectangle(0, 0, H, W, "#dab44a"));
+    svg.append(makeRectangle(0, 0, H, W, colorBoard));
 
 
     var numOfPix = ((W-100)/(state.size-1));//so that the board has 50 pix of room on each side
