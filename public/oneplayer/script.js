@@ -41,6 +41,7 @@ function drawBoard(state){
     var W = 600, H = 600;
     canvas.css("height", H);
     canvas.css("width", W);
+
     var svg = $(makeSVG(W, H));
     svg.append(makeRectangle(0, 0, H, W, "#dab44a"));
 
@@ -98,7 +99,7 @@ function drawBoard(state){
     svg.append(makeCircle(W-50,W-50, tsize, state.board[state.size-1][state.size-1]));
 
 
-    canvas.append(svg);
+    canvas.empty().append(svg);
 }
 
 
@@ -153,8 +154,6 @@ AIMove.onreadystatechange = function() {
             sendBoard();
 
             drawBoard(state);
-
-            location.reload();
         }
 }
 
