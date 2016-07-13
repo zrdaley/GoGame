@@ -1,7 +1,8 @@
-
 var postXhr = new XMLHttpRequest();
 var xhr = new XMLHttpRequest();
 var AIMove = new XMLHttpRequest();
+
+var boardSizeClicked = 0;
 
 var state = {
    "size": 0,
@@ -16,6 +17,17 @@ var state = {
    "refresh": false,
 }
 
+// add wins to page
+document.getElementById('wins').innerHTML = "Wins: "; // + account win value
+
+
+function checkOnePlyrBoard() {
+    if (boardSizeClicked == 0) {
+        alert("Please choose a board size.");
+    }else if(boardSizeClicked == 1) {
+        window.location.href="login/login.html";
+    }
+}
 
 //working on this for board size from dropdown
 function setBoard(size) {
@@ -125,7 +137,7 @@ function makeMove(x){
     var xCoord = Math.round(((x.cy.baseVal.value) / numOfPix) - 0.8);
     console.log(xCoord);
     console.log(yCoord);
-    
+
     //update board state
     state.board[xCoord][yCoord] = 2;
     console.log(state.board);
@@ -184,32 +196,32 @@ function init(){
                 drawBoard(generateBoard(state.size));
             else
                 drawBoard(state);
-        
+
         }
     }
 }
 
 
-function generateBoard(size){    
-    var tmp = []; 
-    
+function generateBoard(size){
+    var tmp = [];
+
     // determined locations where HandiCap tokens should be put
-    var hcToken = Math.round((state.size)/3); 
+    var hcToken = Math.round((state.size)/3);
     var hcTokenSecond;
-    if(state.size == 9) {       
+    if(state.size == 9) {
         hcToken--;
         hcTokenSecond = 3*hcToken;
-    } 
+    }
     else
         hcTokenSecond = 2*hcToken;
-       
+
 
     console.log(hcToken);
     var hc = state.handiCap;
     var set = false;
 
     for(var i = 0; i < state.size; i++){
-        tmp = []; 
+        tmp = [];
         if(i == hcToken || i == hcTokenSecond)
             set = true;
         else
@@ -228,8 +240,8 @@ function generateBoard(size){
     postXhr.setRequestHeader("Content-type", "application/json");
     postXhr.responseType = 'text';
     postXhr.send(JSON.stringify(state));
-    
-    return state; 
+
+    return state;
 }
 
 function isValid(board,move){
@@ -243,9 +255,7 @@ function isValid(board,move){
 }
 
 function logoutConfirm() {
-    if(window.confirm('Really log out and go to home page? Current game progress will be LOST.')){
+    if(window.confirm('Really log out and go to home page? Current game progress will be lost.')){
         window.location.href="../index.html";
     }
 }
-
-

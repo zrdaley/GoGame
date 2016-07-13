@@ -1,4 +1,5 @@
 var checkMove = 2;// starts with black
+var boardSizeClicked = 0; // board size hasn't been chosen
 
 var postXhr = new XMLHttpRequest();
 var xhr = new XMLHttpRequest();
@@ -17,11 +18,20 @@ var state = {
    "refresh": false,
 }
 
+// add wins to page
+document.getElementById('wins').innerHTML = "Wins: "; // + account win value
 
+function checkTwoPlyrBoard() {
+    if (boardSizeClicked == 0) {
+        alert("Please choose a board size.");
+    }else if(boardSizeClicked == 1) {
+        window.location.href="twoplayer/twoplayer.html";
+    }
+}
 
 //working on this for board size from dropdown
 function setBoard(size) {
-
+    boardSizeClicked = 1;
     state.size = size;
 
     //send board state to the server
@@ -148,7 +158,7 @@ function makeMove(x){
     state.last.x = xCoord;
     state.last.y = yCoord;
 	state.last.pass = false;
-	
+
     //checks who goes
 	if (checkMove == 2){
 		x.setAttribute("fill", "black");
@@ -199,7 +209,7 @@ function getMove(){
 
 function gameOver(){
 	//need to count points and display them somewhere
-	
+
 	var canvas = $("#canvas");
     canvas[0].childNodes[0].childNodes[0].style.fill =("red");
 }
@@ -284,7 +294,7 @@ function isValid(board,move){
 }
 
 function logoutConfirm() {
-    if(window.confirm('Really log out and go to home page? Current game progress will be LOST.')){
+    if(window.confirm('Really log out and go to home page? Current game progress will be lost.')){
         window.location.href="../index.html";
     }
 }
