@@ -1,5 +1,6 @@
 var checkMove = 2;// starts with black
 var boardSizeClicked = 0; // board size hasn't been chosen
+var moveUndone = false;
 
 
 function checkTwoPlyrBoard() {
@@ -41,6 +42,8 @@ function changeColorBack(x){
 
 //on mouse click
 function makeMove(x){
+	//set for undo function
+	moveUndone = false;
 
     //decrypt coordinate of placed token
     var numOfPix = ((500)/(state.size-1));
@@ -94,6 +97,26 @@ function getMove(){
 	}
     //send updated state to server
     sendBoard();
+}
+
+function undoMove(){
+	//remove last move from board
+	if(!moveUndone){
+		state.board[state.last.x][state.last.y] = 0;
+		moveUndone = true;
+
+		//sets token to previous colour
+		if(checkMove == 1)
+			checkMove = 2;
+		else
+			checkMove = 1;
+
+		//send and draw
+		sendBoard();
+		drawBoard(state);
+	}
+	else
+		alert("Can't undo move after next player has already begun turn")
 }
 
 function gameOver(){
