@@ -147,7 +147,8 @@ function makeMove(x){
     //update last
     state.last.x = xCoord;
     state.last.y = yCoord;
-
+	state.last.pass = false;
+	
     //checks who goes
 	if (checkMove == 2){
 		x.setAttribute("fill", "black");
@@ -179,7 +180,28 @@ function makeMove(x){
 
 //pass
 function getMove(){
-	console.log(state.board);
+	if (state.last.pass == true){//two passes in a row = game over
+		gameOver();
+	}else{
+		state.last.pass = true;
+	}
+	if (checkMove == 1){
+		checkMove = 2;//changes the turn
+	}else{
+		checkMove = 1;//changes turn
+	}
+    //send updated state to server
+    postXhr.open("POST", "/board", true);
+    postXhr.setRequestHeader("Content-type", "application/json");
+    postXhr.responseType = 'text';
+    postXhr.send(JSON.stringify(state));
+}
+
+function gameOver(){
+	//need to count points and display them somewhere
+	
+	var canvas = $("#canvas");
+    canvas[0].childNodes[0].childNodes[0].style.fill =("red");
 }
 
 
