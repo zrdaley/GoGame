@@ -2,19 +2,17 @@
 
 var express = require("express");
 var bodyParser = require("body-parser");
-
 var Storage = require('./lib/MongoDB');
-
 var app = express();
 
+//singleton use of database
 var db = new Storage(null, null, 'go');
 
-var AIrequest = require('./AIrequest');
-
 app.use(bodyParser.json());
-
 app.use(express.static('public'));
 
+//create AI request and board
+var AIrequest = require('./AIrequest');
 var Board;
 
 app.get("/login", function(req, res){
