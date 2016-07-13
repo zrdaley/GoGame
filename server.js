@@ -9,6 +9,8 @@ var app = express();
 
 var db = new Storage(null, null, 'go');
 
+var AIrequest = require('./AIrequest');
+
 app.use(bodyParser.json());
 
 app.use(express.static('public'));
@@ -28,6 +30,16 @@ app.get("/login", function(req, res){
 		}
 	});
 });
+
+app.get("/move", function(req, res){
+	console.log("GET Request to: /move");
+
+   AIrequest.getRandomMove(Board["size"], Board["board"], Board["last"]["x"],Board["last"]["y"], Board["last"]["c"], Board["last"]["pass"], function(move){
+        res.json(move);
+    });
+
+});
+
 
 
 app.post("/add", function (req, res) {

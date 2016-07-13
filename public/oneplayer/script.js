@@ -1,6 +1,7 @@
 
 var postXhr = new XMLHttpRequest();
 var xhr = new XMLHttpRequest();
+var AIMove = new XMLHttpRequest();
 
 var state = {
    "size": 0,
@@ -18,14 +19,8 @@ var state = {
 
 //working on this for board size from dropdown
 function setBoard(size) {
-    
     state.size = size;
-    //send board state to the server
-
-    postXhr.open("POST", "/board", true);
-    postXhr.setRequestHeader("Content-type", "application/json");
-    postXhr.responseType = 'text';
-    postXhr.send(JSON.stringify(state));
+    sendBoard();
 }
 
 
@@ -36,11 +31,7 @@ function handiCap(element) {
    else {
         state.handiCap = false;
    }
-    //send board state to the server
-    postXhr.open("POST", "/board", true);
-    postXhr.setRequestHeader("Content-type", "application/json");
-    postXhr.responseType = 'text';
-    postXhr.send(JSON.stringify(state));
+    sendBoard();
 }
 
 function drawBoard(state){
@@ -148,7 +139,31 @@ function makeMove(x){
     postXhr.send(JSON.stringify(state));
 
     //call AI
+    AIMove.open("GET", "/move", true);
+    AIMove.send();
 
+}
+
+//Upon AI request return
+AIMove.onreadystatechange = function() {
+        if(AIMove.readyState == 4 && AIMove.status == 200) {
+            //update board
+            var move = JSON.parse(AIMove.responseText);
+            state.board[move["x"]][move["y"]] = move["c"];
+            sendBoard();
+
+            drawBoard(state);
+
+            location.reload();
+        }
+}
+
+//sends board state to the server
+function sendBoard(){
+    postXhr.open("POST", "/board", true);
+    postXhr.setRequestHeader("Content-type", "application/json");
+    postXhr.responseType = 'text';
+    postXhr.send(JSON.stringify(state));
 }
 
 //part of board size from dropdown
