@@ -4,7 +4,11 @@ var boardSizeClicked = 0; // board size hasn't been chosen
 
 
 // add wins to page
+<<<<<<< HEAD
 //document.getElementById('wins').innerHTML = "Wins: "; // + account win value
+=======
+// document.getElementById('wins').innerHTML = "Wins: "; // + account win value
+>>>>>>> aa0534eb62d4cca4f54f4133fa7712663ec56e1b
 
 function checkTwoPlyrBoard() {
     if (boardSizeClicked == 0) {
