@@ -2,12 +2,6 @@ var AIMove = new XMLHttpRequest();
 
 var boardSizeClicked = 0;
 
-// add wins to page
-<<<<<<< HEAD
-//document.getElementById('wins').innerHTML = "Wins: "; // + account win value
-=======
-// document.getElementById('wins').innerHTML = "Wins: "; // + account win value
->>>>>>> aa0534eb62d4cca4f54f4133fa7712663ec56e1b
 
 
 function checkOnePlyrBoard() {

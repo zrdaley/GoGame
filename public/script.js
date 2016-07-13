@@ -5,10 +5,7 @@ var currentAccount = null;
 // create a new object for accessing the server
 var serverInterface = new ServerInterface("localhost", 30110);
 
-<<<<<<< HEAD
-//alert("hello01");
-=======
->>>>>>> aa0534eb62d4cca4f54f4133fa7712663ec56e1b
+
 function createAccount(){
 
 	//alert("hi");
