@@ -4,6 +4,20 @@ var postXhr = new XMLHttpRequest();
 var xhr = new XMLHttpRequest();
 var colorBoard = "#dab44a";//base color
 var moveUndone = false;
+var theme = 0;
+
+if(theme ==1){
+    document.body.style.backgroundImage = "url('../img/geisha.jpg')";
+    document.body.style.backgroundRepeat = "repeat-y";
+    document.body.style.backgroundPosition = "center right";
+    colorBoard = "#C44141";
+}
+if(theme == 2){
+    document.body.style.backgroundImage = "url('../img/sam.jpg')";
+    document.body.style.backgroundRepeat = "repeat-y";
+    document.body.style.backgroundPosition = "center right";
+    colorBoard = "#4574BF";
+}
 
 var state = {
    "size": 0,
@@ -210,6 +224,93 @@ function undoMove(){
     else
         alert("Can't undo move after next player has already begun turn")
 }
+
+function check_illegal_move(x, y, color){
+    var liberty = 4;
+    //check for white token
+    if(color == 1){
+        if(x != 0){
+            if(state.board[x-1][y] == 2)
+                liberty--; 
+        }else{
+            liberty--;
+        }
+
+        if(x != state.size - 1){
+            if(state.board[x+1][y] == 2)
+                liberty--; 
+        }else{
+            liberty--;
+        }
+
+        if(y != 0){
+            if(state.board[x][y-1] == 2)
+                liberty--; 
+        }else{
+            liberty--; 
+        }
+
+        if(y != state.size -1){
+            if(state.board[x][y+1] == 2)
+                liberty--; 
+        }else{
+            liberty--;
+        }
+    }
+
+    //check for black token
+    if(color == 2){
+        if(x != 0){
+            if(state.board[x-1][y] == 1)
+                liberty--; 
+        }else{
+            liberty--;
+        }
+
+        if(x != state.size - 1){
+            if(state.board[x+1][y] == 1)
+                liberty--; 
+        }else{
+            liberty--;
+        }
+
+        if(y != 0){
+            if(state.board[x][y-1] == 1)
+                liberty--; 
+        }else{
+            liberty--; 
+        }
+
+        if(y != state.size -1){
+            if(state.board[x][y+1] == 1)
+                liberty--; 
+        }else{
+            liberty--;
+        }
+    }
+    return liberty;
+}
+
+function capture(x){
+    console.log("find capture x: ", x)
+    for(i = 0; i < state.size; i++){
+        for(j = 0; j < state.size; j++){
+            if(check_illegal_move(i,j,state.board[i][j]) == 0){
+                alert(state.board[i][j] + " "+ i + " " + j+ "is captured");                
+                state.board[i][j] = 0;
+
+                //Here is a problem we can write in report
+                //We must refresh the page after drawBoard. 
+                //Otherwise, another board will be drawn below current board.
+                 drawBoard(state);
+                 location.reload();
+            }
+        }
+    }
+
+    console.log("AFTER MOVE", state.board)
+}
+
 
 
 /*END GAME LOGIC*/
