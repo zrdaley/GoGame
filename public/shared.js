@@ -3,6 +3,7 @@
 var postXhr = new XMLHttpRequest();
 var xhr = new XMLHttpRequest();
 var colorBoard = "#dab44a";//base color
+var moveUndone = false;
 
 var state = {
    "size": 0,
@@ -188,6 +189,26 @@ function init(){
 
         }
     }
+}
+
+function undoMove(){
+    //remove last move from board
+    if(!moveUndone){
+        state.board[state.last.x][state.last.y] = 0;
+        moveUndone = true;
+
+        //sets token to previous colour
+        if(checkMove == 1)
+            checkMove = 2;
+        else
+            checkMove = 1;
+
+        //send and draw
+        sendBoard();
+        drawBoard(state);
+    }
+    else
+        alert("Can't undo move after next player has already begun turn")
 }
 
 
