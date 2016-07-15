@@ -82,28 +82,46 @@
 /****************************
  *  ========Navbar========  *
  ****************************/
-.navbar {
-    background-color: #333;
-}
-.navbar a:hover {
-    color: #333;
-    background-color: #fff;
-}
-li a {
-    color: #fff;
-    font-family: quicksand;
-    font-variant: lighter;
-    font-size: 1.1em;
-}
-.navbar-brand {
-    color: #fff;
-}
-.icon-bar {
-    background-color: #fff;
-}
-.navbar-toggle {
-    border-color: #fff;
-}
-.navbar-header > button:hover {
-    box-shadow: 0 0 2px 2px white;
-}
+ .navbar {
+     /*background-color: #333;*/
+     background: transparent;
+ }
+ .navbar a:hover {
+     color: #333;
+     background-color: transparent;
+ }
+ li a {
+     color: #333;
+     font-family: quicksand;
+     font-variant: lighter;
+     font-size: 1.3em;
+ }
+ .glyphicon {
+     font-size: 1.5em;
+     margin: 0 auto;
+ }
+ .navbar-brand {
+     color: #333;
+ }
+ .navbar-brand:hover .glyphicon {
+     text-decoration: underline;
+ }
+ .navbar > .container-fluid > .collapse > ul:hover a:hover {
+     background: transparent;
+ }
+ .icon-bar {
+     background-color: #333;
+ }
+ .navbar-toggle {
+     border-color: #333;
+ }
+ .navbar-header > button:hover {
+     box-shadow: 0 0 2px 2px white;
+ }
+ .navbar-nav {
+     float: right;
+ }
+ .navbar-nav > li, a:hover .glyphicon {
+     text-decoration: underline;
+     background-color: transparent;
+ }

@@ -28,29 +28,47 @@ h1 {
  *  ========Navbar========  *
  ****************************/
 .navbar {
-    background-color: #333;
+    /*background-color: #333;*/
+    background: transparent;
 }
 .navbar a:hover {
     color: #333;
-    background-color: #fff;
+    background-color: transparent;
 }
 li a {
-    color: #fff;
+    color: #333;
     font-family: quicksand;
     font-variant: lighter;
-    font-size: 1.1em;
+    font-size: 1.3em;
+}
+.glyphicon {
+    font-size: 1.5em;
+    margin: 0 auto;
 }
 .navbar-brand {
-    color: #fff;
+    color: #333;
+}
+.navbar-brand:hover .glyphicon {
+    text-decoration: underline;
+}
+.navbar > .container-fluid > .collapse > ul:hover a:hover {
+    background: transparent;
 }
 .icon-bar {
-    background-color: #fff;
+    background-color: #333;
 }
 .navbar-toggle {
-    border-color: #fff;
+    border-color: #333;
 }
 .navbar-header > button:hover {
     box-shadow: 0 0 2px 2px white;
+}
+.navbar-nav {
+    float: right;
+}
+.navbar-nav > li, a:hover .glyphicon {
+    text-decoration: underline;
+    background-color: transparent;
 }
 
 /*****************************
@@ -183,25 +201,4 @@ li a {
 .geisha-button:active:hover {
     background-color: #333;
     box-shadow: 0 0 5px 2px #C44141;
-}
-/****************************
- *  ========Footer========  *
- ****************************/
-.footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  /* Set the fixed height of the footer here */
-  height: 40px;
-  background-color: #333;
-}
-.container > .text-muted {
-  margin: 13px 0;
-  color: #fff;
-  font-family: quicksand;
-  font-variant: lighter;
-}
-.footer > .container {
-  padding-right: 15px;
-  padding-left: 15px;
 }
