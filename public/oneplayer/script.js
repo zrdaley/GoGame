@@ -64,6 +64,7 @@ function makeMove(x){
     console.log(state.last);
 
     //send updated state to server
+    capture(x);
     sendBoard();
 
     //call AI
