@@ -1,11 +1,15 @@
 var checkMove = 2;// starts with black
 var boardSizeClicked = 0; // board size hasn't been chosen
 var moveUndone = false;
+var themeClicked = 0;
 
 
 function checkTwoPlyrBoard() {
     if (boardSizeClicked == 0) {
         alert("Please choose a board size.");
+    }
+    if (themeClicked == 0) {
+        alert("Please choose a theme.");  
     }else if(boardSizeClicked == 1) {
         window.location.href="twoplayer/twoplayer.html";
     }

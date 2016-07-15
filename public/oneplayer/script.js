@@ -1,12 +1,16 @@
 var AIMove = new XMLHttpRequest();
 
 var boardSizeClicked = 0;
+var themeClicked = 0;
 
 
 
 function checkOnePlyrBoard() {
     if (boardSizeClicked == 0) {
         alert("Please choose a board size.");
+    }
+    if (themeClicked == 0) {
+        alert("Please choose a theme.");  
     }else if(boardSizeClicked == 1) {
         window.location.href="login/login.html";
     }
@@ -14,6 +18,7 @@ function checkOnePlyrBoard() {
 
 //working on this for board size from dropdown
 function setBoard(size) {
+    boardSizeClicked = 1;
     state.size = size;
     sendBoard();
 }

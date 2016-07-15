@@ -2,22 +2,9 @@
 
 var postXhr = new XMLHttpRequest();
 var xhr = new XMLHttpRequest();
-var colorBoard = "#dab44a";//base color
+var colorBoard;//base color
 var moveUndone = false;
 var theme = 0;
-
-if(theme ==1){
-    document.body.style.backgroundImage = "url('../img/geisha.jpg')";
-    document.body.style.backgroundRepeat = "repeat-y";
-    document.body.style.backgroundPosition = "center right";
-    colorBoard = "#C44141";
-}
-if(theme == 2){
-    document.body.style.backgroundImage = "url('../img/sam.jpg')";
-    document.body.style.backgroundRepeat = "repeat-y";
-    document.body.style.backgroundPosition = "center right";
-    colorBoard = "#4574BF";
-}
 
 var state = {
    "size": 0,
@@ -30,7 +17,24 @@ var state = {
     },
    "handiCap": false,
    "refresh": false,
+   "theme": 0,
+   "colour": 0,
 }
+
+
+function setTheme(val){
+    themeClicked = 1;
+    state.theme = val;
+    //console.log(val);
+    
+    if(state.theme == 1)
+        state.colour = "#C44141";
+    if(state.theme == 2)
+        state.colour = "#4574BF";
+    
+    sendBoard();
+}
+
 
 function drawBoard(state){
 
@@ -156,11 +160,7 @@ function generateBoard(size){
     }
 
     //prevent duplicate boards
-    state.refresh = true;
-    postXhr.open("POST", "/board", true);
-    postXhr.setRequestHeader("Content-type", "application/json");
-    postXhr.responseType = 'text';
-    postXhr.send(JSON.stringify(state));
+    sendBoard();
 
     return state;
 }
@@ -189,12 +189,20 @@ function init(){
 
     xhr.onreadystatechange = function() {
         if(xhr.readyState == 4 && xhr.status == 200) {
+
             temp = JSON.parse(xhr.responseText);
             state.size = temp["size"];
             state.board = temp["board"];
             state.last = temp["last"];
             state.handiCap = temp["handiCap"];
             state.refresh = temp["refresh"];
+
+            //set theme info
+            state.theme = temp["theme"];
+            state.colour = temp["colour"];
+            theme = temp["theme"];
+            colorBoard = temp["colour"];
+            
             //create board and prevent new board from being created
             if(state.refresh == false)
                 drawBoard(generateBoard(state.size));
@@ -202,7 +210,18 @@ function init(){
                 drawBoard(state);
 
         }
+        if(theme ==1){
+            document.body.style.backgroundImage = "url('../img/geisha.jpg')";
+            document.body.style.backgroundRepeat = "repeat-y";
+            document.body.style.backgroundPosition = "center right";
+        }
+        if(theme == 2){
+            document.body.style.backgroundImage = "url('../img/sam.jpg')";
+            document.body.style.backgroundRepeat = "repeat-y";
+            document.body.style.backgroundPosition = "center right";
+         }
     }
+
 }
 
 function undoMove(){
