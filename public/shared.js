@@ -26,12 +26,12 @@ function setTheme(val){
     themeClicked = 1;
     state.theme = val;
     //console.log(val);
-    
+
     if(state.theme == 1)
         state.colour = "#C44141";
     if(state.theme == 2)
         state.colour = "#4574BF";
-    
+
     sendBoard();
 }
 
@@ -202,7 +202,7 @@ function init(){
             state.colour = temp["colour"];
             theme = temp["theme"];
             colorBoard = temp["colour"];
-            
+
             //create board and prevent new board from being created
             if(state.refresh == false)
                 drawBoard(generateBoard(state.size));
@@ -212,12 +212,12 @@ function init(){
         }
         if(theme ==1){
             document.body.style.backgroundImage = "url('../img/geisha.jpg')";
-            document.body.style.backgroundRepeat = "repeat-y";
+            document.body.style.backgroundRepeat = "no-repeat";
             document.body.style.backgroundPosition = "center right";
         }
         if(theme == 2){
             document.body.style.backgroundImage = "url('../img/sam.jpg')";
-            document.body.style.backgroundRepeat = "repeat-y";
+            document.body.style.backgroundRepeat = "no-repeat";
             document.body.style.backgroundPosition = "center right";
          }
     }
