@@ -1,0 +1,154 @@
+/*****************************
+ *  ========General========  *
+ *****************************/
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+  padding-top: 50px;
+  margin-bottom: 60px;
+  background-image: url("../img/board1-90opac.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.main {
+  padding: 40px 15px;
+  text-align: center;
+}
+h1 {
+    color: white;
+    font-family: quicksand;
+    font-variant: lighter;
+    font-size: 3em;
+    background: url("../img/header-bg.png");
+    border-radius: 10px;
+    width: 500px;
+    text-align: center;
+    margin: 10% auto;
+}
+.container > .choose {
+    text-align: center;
+    font-size: 2em;
+    position: relative;
+}
+
+/****************************
+ *  ========Navbar========  *
+ ****************************/
+.navbar {
+    background-color: #333;
+}
+.navbar a:hover {
+    color: #333;
+    background-color: #fff;
+}
+li a {
+    color: #fff;
+    font-family: quicksand;
+    font-variant: lighter;
+    font-size: 1.1em;
+}
+.navbar-brand {
+    color: #fff;
+}
+.icon-bar {
+    background-color: #fff;
+}
+.navbar-toggle {
+    border-color: #fff;
+}
+.navbar-header > button:hover {
+    box-shadow: 0 0 2px 2px white;
+}
+
+/*****************************
+ *  ========Options========  *
+ *****************************/
+.container > .col-md-3 {
+    margin-bottom: 2%;
+    font-family: quicksand;
+    font-variant: lighter;
+}
+.container > .col-md-3 > .checkbox {
+    margin: 0 auto;
+    /*margin-left: 21px;*/
+    width: 160px;
+    height: 75px;
+    background: #333;
+    color: white;
+    font-size: 1.2em;
+    border: solid white 1px;
+    border-radius: 3px;
+}
+.container > .col-md-3 > .checkbox > .text-center > label {
+    margin-top: 15%;
+}
+
+.container > .col-md-3 > .dropdown {
+    margin: 0 auto;
+    background-color: transparent;
+    height: 75px;
+    width: 160px;
+}
+.container > .col-md-3 > .dropdown > button {
+    background: #333;
+    border: solid white 1px;
+    height: 75px;
+    width: 160px;
+    font-size: 1.2em;
+}
+.container > .col-md-3 > .dropdown > .dropdown-toggle:focus, .dropdown-toggle:active {
+    background-color: #fff;
+    color: #333;
+}
+
+/**********************************
+ *  ========Main Buttons========  *
+ **********************************/
+.container > .text-center > button {
+    width: 317px;
+    height: 170px;
+    margin: 0 auto;
+    background-color: transparent;
+    border-color: #fff;
+}
+.container > .text-center > button:hover {
+    box-shadow: 0 0 5px 5px white;
+}
+#one-player-button {
+    margin-right: 3%;
+    background-image: url("../img/1player.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+#two-player-button {
+    margin-left: 3%;
+    background-image: url("../img/2player.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/****************************
+ *  ========Footer========  *
+ ****************************/
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 40px;
+  background-color: #333;
+}
+.container .text-muted {
+  margin: 13px 0;
+  color: #fff;
+  font-family: quicksand;
+  font-variant: lighter;
+}
+.footer > .container {
+  padding-right: 15px;
+  padding-left: 15px;
+}

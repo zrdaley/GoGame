@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-
+  <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Play Go</title>
+    <title>Play Go!</title>
 
     <!--  Quicksand Font -->
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Quicksand" />
@@ -24,11 +22,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
 
     <!-- Custom styles for this template -->
-    <link rel="stylesheet" href="css/main.css">
+    <link href="css/main.css" rel="stylesheet">
+  </head>
 
-</head>
-
-<body>
+  <body>
 
     <nav class="navbar navbar-fixed-top">
         <div class="container-fluid">
@@ -39,76 +36,59 @@
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
               </button>
-              <a onclick="logoutConfirm();" class="navbar-brand"><span class="glyphicon glyphicon-home"></span></a>
+              <a href="index.html" class="navbar-brand"><span class="glyphicon glyphicon-home"></span></a>
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li><a onclick="return popup('../files/RulesOfGo.pdf')">Rules</a></li>
-                    <li><a onclick="return popup('../nav-pages/aboutus.html')">About Us</a></li>
+                    <li><a onclick="return popup('files/RulesOfGo.pdf')">Rules</a></li>
+                    <li><a onclick="return popup('nav-pages/aboutus.html')">About Us</a></li>
                 </ul>
 
             </div><!--/.nav-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
 
-    <!-- Page Content -->
     <div class="container">
+        <h1 class="header">Welcome to Go!</h1>
+    </div>
 
-        <div class="row">
-            <div class="text-center">
-                <div class="col-sm-6">
-                    <div class="col-sm-6"></div>
-                    <div class="col-sm-6 circle mainCircle">
-                        <div class="header">
-                        <!-- <h3>Welcome to</h3> -->
-                            <h1>Go</h1>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="col-sm-6 circle">
-                        <label><input type="checkbox" value="" onchange = "handiCap(this);">Handicaps?</label>
-                        <div class="dropdown">
-                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Board Sizes
-                            <span class="caret"></span></button>
-                            <ul class="dropdown-menu">
-                                <!--  change what board size options do here -->
-                                <li><a onclick="setBoard(9);">9X9</a></li>
-                                <li><a onclick="setBoard(13);">13X13</a></li>
-                                <li><a onclick="setBoard(19);">19X19</a></li>
-                          </ul>
-                        </div>
-                    </div>
-                    <div class="col-sm-6"></div>
-                </div>
-
-                <div class="col-sm-12"></div>
-
-                <div class="col-sm-6">
-                    <div class="col-sm-6"></div>
-                    <div class="col-sm-6 circle">
-                        <button class="btn btn-primary samurai-button" type="button">Samurai Theme</button>
-                        <button class="btn btn-primary geisha-button" type="button">Geisha Theme</button>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="col-sm-6 circle buttons">
-                        <button class="btn btn-primary one-player-button" type="button" onclick="checkOnePlyrBoard();">One Player vs AI</button>
-                        <button class="btn btn-primary two-player-button" type="button" onclick="checkTwoPlyrBoard();">Two Player</button>
-                    </div>
-                    <div class="col-sm-6"></div>
+    <div class="container">
+        <div class="col-md-3"></div>
+        <div class="col-md-3 placeholder">
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Board Sizes
+                <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <!--  change what board size options do here -->
+                    <li><a onclick="setBoard(9);">9X9</a></li>
+                    <li><a onclick="setBoard(13);">13X13</a></li>
+                    <li><a onclick="setBoard(19);">19X19</a></li>
+              </ul>
+            </div>
+        </div>
+        <div class="col-md-3 placeholder">
+            <div class="checkbox">
+                <div class="text-center">
+                    <label><input type="checkbox" value="" onchange = "handiCap(this);">Handicaps?</label>
                 </div>
             </div>
         </div>
-        <!-- /.row -->
+        <div class="col-md-3"></div>
     </div>
-    <!-- /.container -->
 
-    <div class="footer">
-        <div class="container">
-        <p class="text-muted">SENG299 // Group 11</p>
+    <div class="container">
+        <div class="text-center">
+            <button type="button" id="one-player-button" class="btn btn-primary btn-lg .oneplyr" onclick="checkOnePlyrBoard();"></button>
+            <button type="button" id="two-player-button" class="btn btn-primary btn-lg .twoplyr" onclick="checkTwoPlyrBoard();"></button>
         </div>
     </div>
+
+    <div class="footer">
+      <div class="container">
+        <p class="text-muted">SENG299 // Group 11</p>
+      </div>
+    </div>
+
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -120,6 +100,5 @@
     <script type="text/javascript" src="oneplayer/script.js"></script>
     <script type="text/javascript" src="twoplayer/script.js"></script>
     <script type="text/javascript" src="shared.js"></script>
-</body>
-
+  </body>
 </html>

@@ -8,29 +8,20 @@ html {
 body {
   padding-top: 50px;
   margin-bottom: 60px;
-  background-image: url("../img/board1-90opac.png");
+  background-image: url("../img/bg.jpg");
   background-repeat: no-repeat;
   background-size: cover;
 }
-.main {
-  padding: 40px 15px;
-  text-align: center;
-}
 h1 {
-    color: white;
-    font-family: quicksand;
-    font-variant: lighter;
-    font-size: 3em;
-    background: url("../img/header-bg.png");
-    border-radius: 10px;
-    width: 500px;
-    text-align: center;
-    margin: 10% auto;
+    font-size: 7.5em;
+    margin: 0 auto;
+    color: #fff;
+    text-transform: uppercase;
 }
-.container > .choose {
-    text-align: center;
-    font-size: 2em;
-    position: relative;
+.header {
+    margin: 0 auto;
+    margin-top: 30%;
+    min-width: 100%;
 }
 
 /****************************
@@ -63,74 +54,136 @@ li a {
 }
 
 /*****************************
- *  ========Options========  *
+ *  ========Buttons========  *
  *****************************/
-.container > .col-md-3 {
-    margin-bottom: 2%;
+ /* white circles */
+.circle {
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 600px;
+    height: 250px;
+    width: 250px;
+    margin-top: 6%;
+    box-shadow: 0 0 5px 2px #333;
+}
+/* black circle */
+.mainCircle {
+    background-color: #333;
+    box-shadow: 0 0 5px 2px #fff;
+}
+.container > .row > .text-center > .col-sm-6 {
     font-family: quicksand;
     font-variant: lighter;
 }
-.container > .col-md-3 > .checkbox {
+.container > .row > .text-center > .col-sm-6 > .col-sm-6 > label {
     margin: 0 auto;
-    /*margin-left: 21px;*/
-    width: 160px;
-    height: 75px;
-    background: #333;
-    color: white;
-    font-size: 1.2em;
-    border: solid white 1px;
-    border-radius: 3px;
-}
-.container > .col-md-3 > .checkbox > .text-center > label {
-    margin-top: 15%;
-}
-
-.container > .col-md-3 > .dropdown {
-    margin: 0 auto;
-    background-color: transparent;
-    height: 75px;
-    width: 160px;
-}
-.container > .col-md-3 > .dropdown > button {
-    background: #333;
-    border: solid white 1px;
-    height: 75px;
-    width: 160px;
-    font-size: 1.2em;
-}
-.container > .col-md-3 > .dropdown > .dropdown-toggle:focus, .dropdown-toggle:active {
+    margin-top: 25%;
+    border: solid #fff 1px;
+    font-size: 1em;
+    height: 25px;
+    width: 130px;
+    color: #333;
     background-color: #fff;
+    border-radius: 3px;
+    box-shadow: 0 0 5px 2px #333;
+}
+.container > .row > .text-center > .col-sm-6 > .col-sm-6 > .dropdown {
+    margin: 0 auto;
+    margin-top: 15%;
+    background-color: transparent;
+    height: 45px;
+    width: 160px;
+}
+.container > .row > .text-center > .col-sm-6 > .col-sm-6 > .dropdown > button {
+    background: #fff;
+    border: solid white 1px;
+    height: 75px;
+    width: 160px;
+    font-size: 1.2em;
+    box-shadow: 0 0 5px 2px #333;
     color: #333;
 }
-
-/**********************************
- *  ========Main Buttons========  *
- **********************************/
-.container > .text-center > button {
-    width: 317px;
-    height: 170px;
-    margin: 0 auto;
-    background-color: transparent;
+.container > .row > .text-center > .col-sm-6 > .col-sm-6 > .dropdown > .dropdown-toggle:focus, .dropdown-toggle:active {
+    background-color: #333;
     border-color: #fff;
-}
-.container > .text-center > button:hover {
-    box-shadow: 0 0 5px 5px white;
-}
-#one-player-button {
-    margin-right: 3%;
-    background-image: url("../img/1player.png");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-#two-player-button {
-    margin-left: 3%;
-    background-image: url("../img/2player.png");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    color: #fff;
 }
 
+.one-player-button {
+    background: #fff;
+    border: solid #333 1px;
+    height: 50px;
+    width: 160px;
+    font-size: 1.2em;
+    margin-top: 30%;
+    box-shadow: 0 0 5px 2px #333;
+    color: #333;
+}
+.one-player-button:hover {
+    background-color: #333;
+    border-color: #fff;
+    color: #fff;
+}
+.one-player-button:active:hover {
+    background-color: #333;
+    color: #fff;
+}
+
+.two-player-button {
+    margin-top: 10%;
+    background: #fff;
+    border: solid #333 1px;
+    height: 50px;
+    width: 160px;
+    font-size: 1.2em;
+    box-shadow: 0 0 5px 2px #333;
+    color: #333;
+}
+.two-player-button:hover {
+    background-color: #333;
+    border-color: #fff;
+    color: #fff;
+}
+.two-player-button:active:hover {
+    background-color: #333;
+    color: #fff;
+}
+
+.samurai-button {
+    background: #fff;
+    border: solid #333 1px;
+    height: 50px;
+    width: 160px;
+    font-size: 1.2em;
+    margin-top: 30%;
+    box-shadow: 0 0 5px 2px #4574BF;
+    color: #333;
+}
+.samurai-button:hover {
+    background-color: #4574BF;
+}
+.samurai-button:active:hover {
+    background-color: #333;
+    box-shadow: 0 0 5px 2px #4574BF;
+}
+
+.geisha-button {
+    background: #fff;
+    border: solid #333 1px;
+    height: 50px;
+    width: 160px;
+    font-size: 1.2em;
+    margin-top: 10%;
+    box-shadow: 0 0 5px 2px #C44141;
+    color: #333;
+}
+.geisha-button:hover {
+    background-color: #C44141;
+}
+.geisha-button:active:hover {
+    background-color: #333;
+    box-shadow: 0 0 5px 2px #C44141;
+}
 /****************************
  *  ========Footer========  *
  ****************************/
@@ -142,7 +195,7 @@ li a {
   height: 40px;
   background-color: #333;
 }
-.container .text-muted {
+.container > .text-muted {
   margin: 13px 0;
   color: #fff;
   font-family: quicksand;
