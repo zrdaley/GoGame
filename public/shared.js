@@ -231,28 +231,28 @@ function check_illegal_move(x, y, color){
     if(color == 1){
         if(x != 0){
             if(state.board[x-1][y] == 2)
-                liberty--; 
+                liberty--;
         }else{
             liberty--;
         }
 
         if(x != state.size - 1){
             if(state.board[x+1][y] == 2)
-                liberty--; 
+                liberty--;
         }else{
             liberty--;
         }
 
         if(y != 0){
             if(state.board[x][y-1] == 2)
-                liberty--; 
+                liberty--;
         }else{
-            liberty--; 
+            liberty--;
         }
 
         if(y != state.size -1){
             if(state.board[x][y+1] == 2)
-                liberty--; 
+                liberty--;
         }else{
             liberty--;
         }
@@ -262,28 +262,28 @@ function check_illegal_move(x, y, color){
     if(color == 2){
         if(x != 0){
             if(state.board[x-1][y] == 1)
-                liberty--; 
+                liberty--;
         }else{
             liberty--;
         }
 
         if(x != state.size - 1){
             if(state.board[x+1][y] == 1)
-                liberty--; 
+                liberty--;
         }else{
             liberty--;
         }
 
         if(y != 0){
             if(state.board[x][y-1] == 1)
-                liberty--; 
+                liberty--;
         }else{
-            liberty--; 
+            liberty--;
         }
 
         if(y != state.size -1){
             if(state.board[x][y+1] == 1)
-                liberty--; 
+                liberty--;
         }else{
             liberty--;
         }
@@ -296,11 +296,11 @@ function capture(x){
     for(i = 0; i < state.size; i++){
         for(j = 0; j < state.size; j++){
             if(check_illegal_move(i,j,state.board[i][j]) == 0){
-                alert(state.board[i][j] + " "+ i + " " + j+ "is captured");                
+                alert(state.board[i][j] + " "+ i + " " + j+ "is captured");
                 state.board[i][j] = 0;
 
                 //Here is a problem we can write in report
-                //We must refresh the page after drawBoard. 
+                //We must refresh the page after drawBoard.
                 //Otherwise, another board will be drawn below current board.
                  drawBoard(state);
                  location.reload();
