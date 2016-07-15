@@ -107,25 +107,3 @@ li a {
 .navbar-header > button:hover {
     box-shadow: 0 0 2px 2px white;
 }
-
-/****************************
- *  ========Footer========  *
- ****************************/
-.footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  /* Set the fixed height of the footer here */
-  height: 40px;
-  background-color: #333;
-}
-.container .text-muted {
-  margin: 13px 0;
-  color: #fff;
-  font-family: quicksand;
-  font-variant: lighter;
-}
-.footer > .container {
-  padding-right: 15px;
-  padding-left: 15px;
-}
