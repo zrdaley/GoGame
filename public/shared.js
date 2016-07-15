@@ -19,6 +19,8 @@ var state = {
    "refresh": false,
    "theme": 0,
    "colour": 0,
+   "black": 0,
+   "white": 6,
 }
 
 
@@ -196,6 +198,10 @@ function init(){
             state.last = temp["last"];
             state.handiCap = temp["handiCap"];
             state.refresh = temp["refresh"];
+            
+            //update score
+            state.white = temp["white"];
+            state.black = temp["black"];
 
             //set theme info
             state.theme = temp["theme"];
@@ -315,20 +321,26 @@ function capture(x){
     for(i = 0; i < state.size; i++){
         for(j = 0; j < state.size; j++){
             if(check_illegal_move(i,j,state.board[i][j]) == 0){
-                alert(state.board[i][j] + " "+ i + " " + j+ "is captured");
+                alert("Token has been captured!");
                 state.board[i][j] = 0;
 
-                //Here is a problem we can write in report
-                //We must refresh the page after drawBoard.
-                //Otherwise, another board will be drawn below current board.
-                 drawBoard(state);
-                 location.reload();
+                //update score to account for captured territory
+                if(checkMove == 1)
+                    state.white--;
+                if(checkMove == 2)
+                    state.black--;
+
+                console.log("score")
+
+                drawBoard(state);
             }
         }
     }
 
     console.log("AFTER MOVE", state.board)
 }
+
+
 
 
 

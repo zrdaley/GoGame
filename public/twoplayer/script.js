@@ -76,7 +76,7 @@ function makeMove(x){
         }
 	}else{
         if(check_illegal_move(xCoord, yCoord, checkMove) == 0){
-            alert("Illegal move!!!");
+            alert("Illegal move!");
         }else{
     		x.setAttribute("fill", "white");
     		x.setAttribute("stroke", "black");
@@ -98,6 +98,20 @@ function makeMove(x){
     sendBoard();
 
 }
+
+function gameOver(){
+
+    //tells player who wins then goes back home
+    if(state.black >  state.white) {
+        alert("Black Won!");
+        setTimeout(function(){window.location.href="../index.html"}, 0);
+    }
+    else {
+        alert("White Won!")
+        setTimeout(function(){window.location.href="../index.html"}, 0);
+    }
+}
+
 
 //pass
 function getMove(){
@@ -135,10 +149,4 @@ function undoMove(){
 		alert("Can't undo move after next player has already begun turn")
 }
 
-function gameOver(){
-	//need to count points and display them somewhere
-
-	var canvas = $("#canvas");
-    canvas[0].childNodes[0].childNodes[0].style.fill =("red");
-}
 

@@ -89,10 +89,7 @@ function getMove(){
     AIMove.send();
 }
 
-function gameOver(){
-	//need to count points and display them somewhere
-    colorBoard ="red";
-}
+
 
 //Upon AI request return
 AIMove.onreadystatechange = function() {
@@ -118,6 +115,19 @@ AIMove.onreadystatechange = function() {
 
             drawBoard(state);
         }
+}
+
+function gameOver(){
+    
+    //tells player who wins then goes back home
+    if(state.black > state.white) {
+        alert("You Won! You now have ? wins!");
+        setTimeout(function(){window.location.href="../index.html"}, 0);
+    }
+    else {
+        alert("AI Won...")
+        setTimeout(function(){window.location.href="../index.html"}, 0);
+    }
 }
 
 
