@@ -42,8 +42,6 @@ function changeColorBack(x){
 
 //on mouse click
 function makeMove(x){
-	//set for undo function
-	moveUndone = false;
 
     //decrypt coordinate of placed token
     var numOfPix = ((500)/(state.size-1));
@@ -56,26 +54,40 @@ function makeMove(x){
     state.last.x = xCoord;
     state.last.y = yCoord;
 	state.last.pass = false;
-
+	
     //checks who goes
 	if (checkMove == 2){
-		x.setAttribute("fill", "black");
-        //update board
-        state.board[xCoord][yCoord] = 2;
-		checkMove = 1;
+        if(check_illegal_move(xCoord, yCoord, checkMove) == 0){
+            alert("Illegal move!");
+        }else{  
+            console.log("what is x: ",x) 
+    		x.setAttribute("fill", "black");
+            //update board
+            state.board[xCoord][yCoord] = 2;
+    		checkMove = 1;
+            x.removeAttribute("fill-opacity");
+            x.removeAttribute("onmouseover");
+            x.removeAttribute("onmouseout");
+            x.removeAttribute("onclick");
+        }
 	}else{
-		x.setAttribute("fill", "white");
-		x.setAttribute("stroke", "black");
-    	x.setAttribute("stroke-width", 1);
-        //update board
-        state.board[xCoord][yCoord] = 1;
-		checkMove = 2;
+        if(check_illegal_move(xCoord, yCoord, checkMove) == 0){
+            alert("Illegal move!!!");
+        }else{
+    		x.setAttribute("fill", "white");
+    		x.setAttribute("stroke", "black");
+        	x.setAttribute("stroke-width", 1);
+            //update board
+            state.board[xCoord][yCoord] = 1;
+    		checkMove = 2;
+            x.removeAttribute("fill-opacity");
+            x.removeAttribute("onmouseover");
+            x.removeAttribute("onmouseout");
+            x.removeAttribute("onclick");
+        }
 	}
-	x.removeAttribute("fill-opacity");
-	x.removeAttribute("onmouseover");
-	x.removeAttribute("onmouseout");
-	x.removeAttribute("onclick");
 
+    capture(x);
     console.log(state.board);
 
     //send updated state to server

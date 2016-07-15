@@ -29,17 +29,27 @@ function changeColorBack(x){
 }
 
 function makeMove(x){
-	x.setAttribute("fill", "black");
-	x.setAttribute("fill-opacity", "1");
-	x.setAttribute("onmouseover","");//to nothing
-	x.setAttribute("onmouseout","");
-
    //decrypt coordinate of placed token
     var numOfPix = ((500)/(state.size-1));
     var yCoord = Math.round(((x.cx.baseVal.value) / numOfPix) - 0.8);
     var xCoord = Math.round(((x.cy.baseVal.value) / numOfPix) - 0.8);
     console.log(xCoord);
     console.log(yCoord);
+
+    //check for illegal move on players part
+    if(check_illegal_move(xCoord, yCoord, 2) == 0){
+            alert("Illegal move!");
+    }else{  
+        console.log("what is x: ",x) 
+        x.setAttribute("fill", "black");
+        //update board
+        state.board[xCoord][yCoord] = 2;
+        checkMove = 1;
+        x.removeAttribute("fill-opacity");
+        x.removeAttribute("onmouseover");
+        x.removeAttribute("onmouseout");
+        x.removeAttribute("onclick");
+    }
 
     //update board state
     state.board[xCoord][yCoord] = 2;
