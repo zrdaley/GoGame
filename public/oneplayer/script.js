@@ -151,8 +151,16 @@ getArmy.onreadystatechange = function() {
                 /*NOTE : this should be set to zero for proper functionality
                 but it crashes the server because an army with no liberties cannot be sent to the AI */
                 if (army[i].liberties.length === 1){
+                    //give black points for capturing territory
+                    if(army[i].colour == 2)
+                        state.white += army[i].size;
+
+                    //give white points for capturing territory
+                    if(army[i].colour == 1)
+                        state.black += army[i].size;
+                    
                     removeTokens(army[i].tokens);
-                    console.log("number of liberties: " + army[i].liberties.length)
+                    //console.log("number of liberties: " + army[i].liberties.length)
 
                 }
             }
