@@ -47,6 +47,10 @@ function changeColorBack(x){
 //on mouse click
 function makeMove(x){
 
+    //call get army
+    getArmy.open("GET", "/army", true);
+    getArmy.send();
+
     //decrypt coordinate of placed token
     var numOfPix = ((500)/(state.size-1));
     var yCoord = Math.round(((x.cx.baseVal.value) / numOfPix) - 0.8);
@@ -73,6 +77,18 @@ function makeMove(x){
             x.removeAttribute("onmouseover");
             x.removeAttribute("onmouseout");
             x.removeAttribute("onclick");
+
+            //if army surrounded
+             for(var i = 0; i < state.keyLiberties.length; i++){
+                    if(state.keyLiberties[i].place[0] == xCoord && state.keyLiberties[i].place[1] == yCoord && state.keyLiberties[i].colour == 1){
+
+                        //remove tokens, give team points, remove keyLiberty from keyLiberties
+                        removeTokens(state.keyLiberties[i].army);
+                        state.black += state.keyLiberties[i].size
+                        state.keyLiberties.splice(i,1);
+                        //alert("AI's army has been captured!");
+                    }
+            }
         }
 	}else{
         if(check_illegal_move(xCoord, yCoord, checkMove) == 0){
@@ -88,10 +104,23 @@ function makeMove(x){
             x.removeAttribute("onmouseover");
             x.removeAttribute("onmouseout");
             x.removeAttribute("onclick");
+
+
+            //if army surrounded
+            for(var i = 0; i < state.keyLiberties.length; i++){
+                 if(state.keyLiberties[i].place[0] == xCoord && state.keyLiberties[i].place[1] == yCoord && state.keyLiberties[i].colour == 2){
+
+                    //remove tokens, give team points, remove keyLiberty from keyLiberties
+                    removeTokens(state.keyLiberties[i].army);
+                    state.black += state.keyLiberties[i].size
+                    state.keyLiberties.splice(i,1);
+                    //alert("AI's army has been captured!");
+                }
+            }
         }
 	}
 
-    capture(x);
+    //capture(x);
     console.log(state.board);
 
     //send updated state to server
@@ -102,12 +131,16 @@ function makeMove(x){
 function gameOver(){
 
     //tells player who wins then goes back home
-    if(state.black >  state.white) {
-        alert("Black Won!");
+    if(state.black > state.white) {
+        alert("Black Won!\nBlack's Score: " + state.black + " \nWhite's Score: " + state.white);
         setTimeout(function(){window.location.href="../index.html"}, 0);
     }
-    else {
-        alert("White Won!")
+    if(state.white > state.black) {
+        alert("Black Won!\nBlack's Score: " + state.black + " \nWhite's Score: " + state.white);
+        setTimeout(function(){window.location.href="../index.html"}, 0);
+    }
+    if (state.white == state.black) {
+        alert("Tie!\nBlack's Score: " + state.black + " \nWhite's Score: " + state.white);
         setTimeout(function(){window.location.href="../index.html"}, 0);
     }
 }

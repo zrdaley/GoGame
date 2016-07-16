@@ -76,7 +76,7 @@ function makeMove(x){
                 removeTokens(state.keyLiberties[i].army);
                 state.black += state.keyLiberties[i].size
                 state.keyLiberties.splice(i,1);
-                alert("AI's army has been captured!");
+                //alert("AI's army has been captured!");
         }
     }
 
@@ -139,7 +139,7 @@ AIMove.onreadystatechange = function() {
                             removeTokens(state.keyLiberties[i].army);
                             state.white += state.keyLiberties[i].size
                             state.keyLiberties.splice(i,1);
-                            alert("Your army has been captured!");
+                            //alert("Your army has been captured!");
                         }
                     }
                  }
