@@ -2,6 +2,9 @@
 
 var postXhr = new XMLHttpRequest();
 var xhr = new XMLHttpRequest();
+var getArmy = new XMLHttpRequest();
+
+
 var colorBoard;//base color
 var moveUndone = false;
 var theme = 0;
@@ -21,8 +24,35 @@ var state = {
    "colour": 0,
    "black": 0,
    "white": 6,
+    "keyLiberties": [],
 }
 
+//class for creating important liberties
+class keyLiberty {
+    constructor(place, colour, army, size){
+        this.place = place,
+        this.colour = colour;
+        this.army = army;
+        this.size = size;
+    }
+}
+
+//deletes a passed in army
+function removeTokens(tokens){
+    for(var i = 0; i < tokens.length; i ++){
+        var x = tokens[i].position[1];
+        var y = tokens[i].position[0];
+        console.log("remove x: " + y);
+        console.log("remove y: " + x);
+        
+        state.board[y][x] = 0;
+        
+        console.log(state.board);
+        
+    }
+    sendBoard();
+    drawBoard(state);
+}
 
 function setTheme(val){
     themeClicked = 1;
@@ -337,8 +367,28 @@ function capture(x){
             }
         }
     }
+}
 
-    //console.log("AFTER MOVE", state.board)
+
+//Upon getArmy request return
+getArmy.onreadystatechange = function() {
+        if(getArmy.readyState == 4 && getArmy.status == 200) {
+            var temp = JSON.parse(getArmy.responseText);
+            army = temp["armies"];
+
+            console.log("number of armies: " + army.length);
+
+            //for each army, check its liberties, of an army only had one liberty, it is stored as a key liberty
+            for(var i = 0; i < army.length; i ++){
+                 if(army[i].liberties.length === 1){
+                        var newKey = new keyLiberty(army[i].liberties[0], army[i].colour, army[i].tokens, army[i].size);
+                        
+                        //console.log(newKey);
+                        state.keyLiberties.push(newKey);
+                        sendBoard();
+                 }
+            }
+        }     
 }
 
 

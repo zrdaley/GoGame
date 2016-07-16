@@ -1,5 +1,5 @@
 var AIMove = new XMLHttpRequest();
-var getArmy = new XMLHttpRequest();
+
 
 var boardSizeClicked = 0;
 var themeClicked = 0;
@@ -65,8 +65,20 @@ function makeMove(x){
     console.log(state.last);
 
     //send updated state to server
-    capture(x);
+    //capture(x);
     sendBoard();
+
+    //if army surrounded
+    for(var i = 0; i < state.keyLiberties.length; i++){
+         if(state.keyLiberties[i].place[0] == xCoord && state.keyLiberties[i].place[1] == yCoord && state.keyLiberties[i].colour == 1){
+
+                //remove tokens, give team points, remove keyLiberty from keyLiberties
+                removeTokens(state.keyLiberties[i].army);
+                state.black += state.keyLiberties[i].size
+                state.keyLiberties.splice(i,1);
+                alert("AI's army has been captured!");
+        }
+    }
 
     //call get army
     getArmy.open("GET", "/army", true);
@@ -118,6 +130,18 @@ AIMove.onreadystatechange = function() {
     			     state.last.x = move["x"];
     			     state.last.y = move["y"];
     			     state.last.pass = false;
+
+                     //if army surrounded
+                    for(var i = 0; i < state.keyLiberties.length; i++){
+                        if(state.keyLiberties[i].place[0] == move["x"] && state.keyLiberties[i].place[1] == move["y"] && state.keyLiberties[i].colour == 2){
+                    
+                            //remove tokens, give team points, remove keyLiberty from keyLiberties
+                            removeTokens(state.keyLiberties[i].army);
+                            state.white += state.keyLiberties[i].size
+                            state.keyLiberties.splice(i,1);
+                            alert("Your army has been captured!");
+                        }
+                    }
                  }
 
     		}else{//if AI did pass
@@ -133,70 +157,19 @@ AIMove.onreadystatechange = function() {
 
             drawBoard(state);
 
-
         }
 }
-
-//Upon AI request return
-getArmy.onreadystatechange = function() {
-        if(getArmy.readyState == 4 && getArmy.status == 200) {
-            var temp = JSON.parse(getArmy.responseText);
-            army = temp["armies"];
-
-            console.log("number of armies: " + army.length);
-
-            //for each army, check its liberties
-            for(var i = 0; i < army.length; i ++){
-                //if an army has no liberties, delete it 
-                /*NOTE : this should be set to zero for proper functionality
-                but it crashes the server because an army with no liberties cannot be sent to the AI */
-                if (army[i].liberties.length === 1){
-                    //give black points for capturing territory
-                    if(army[i].colour == 2)
-                        state.white += army[i].size;
-
-                    //give white points for capturing territory
-                    if(army[i].colour == 1)
-                        state.black += army[i].size;
-                    
-                    removeTokens(army[i].tokens);
-                    //console.log("number of liberties: " + army[i].liberties.length)
-
-                }
-            }
-        }     
-}
-
-//deletes liberties
-function removeTokens(tokens){
-    for(var i = 0; i < tokens.length; i ++){
-        var x = tokens[i].position[1];
-        var y = tokens[i].position[0];
-        console.log("remove x: " + y);
-        console.log("remove y: " + x);
-        
-        state.board[y][x] = 0;
-        
-        console.log(state.board);
-        
-    }
-    sendBoard();
-    drawBoard(state);
-}
-
-
-
 
 
 function gameOver(){
     
     //tells player who wins then goes back home
     if(state.black > state.white) {
-        alert("You Won! You now have ? wins!");
+        alert("You Won! You now have ? wins! \nYour Score: " + state.black + " \n AI's Score: " + state.white);
         setTimeout(function(){window.location.href="../index.html"}, 0);
     }
     else {
-        alert("AI Won...")
+        alert("AI Won...\nYour Score: " + state.black + " \nAI's Score: " + state.white)
         setTimeout(function(){window.location.href="../index.html"}, 0);
     }
 }
