@@ -65,7 +65,7 @@ function makeMove(x){
     console.log(state.last);
 
     //send updated state to server
-    //capture(x);
+    capture(x);
     sendBoard();
 
     //if army surrounded
@@ -73,7 +73,7 @@ function makeMove(x){
          if(state.keyLiberties[i].place[0] == xCoord && state.keyLiberties[i].place[1] == yCoord && state.keyLiberties[i].colour == 1){
 
                 //remove tokens, give team points, remove keyLiberty from keyLiberties
-                removeTokens(state.keyLiberties[i].army);
+                removeTokens(state.keyLiberties[i].army, 2);
                 state.black += state.keyLiberties[i].size
                 state.keyLiberties.splice(i,1);
                 //alert("AI's army has been captured!");
@@ -136,7 +136,7 @@ AIMove.onreadystatechange = function() {
                         if(state.keyLiberties[i].place[0] == move["x"] && state.keyLiberties[i].place[1] == move["y"] && state.keyLiberties[i].colour == 2){
                     
                             //remove tokens, give team points, remove keyLiberty from keyLiberties
-                            removeTokens(state.keyLiberties[i].army);
+                            removeTokens(state.keyLiberties[i].army, 1);
                             state.white += state.keyLiberties[i].size
                             state.keyLiberties.splice(i,1);
                             //alert("Your army has been captured!");

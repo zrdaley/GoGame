@@ -47,27 +47,22 @@ function changeColorBack(x){
 //on mouse click
 function makeMove(x){
 
-    //call get army
-    getArmy.open("GET", "/army", true);
-    getArmy.send();
-
     //decrypt coordinate of placed token
     var numOfPix = ((500)/(state.size-1));
     var yCoord = Math.round(((x.cx.baseVal.value) / numOfPix) - 0.8);
     var xCoord = Math.round(((x.cy.baseVal.value) / numOfPix) - 0.8);
     console.log(xCoord);
     console.log(yCoord);
-
-    //update last
-    state.last.x = xCoord;
-    state.last.y = yCoord;
-	state.last.pass = false;
 	
     //checks who goes
 	if (checkMove == 2){
         if(check_illegal_move(xCoord, yCoord, checkMove) == 0){
             alert("Illegal move!");
-        }else{  
+        }
+        else if(checkTerr(xCoord, yCoord, 2) == false){
+            alert("Illegal move!");
+        }
+        else{  
             console.log("what is x: ",x) 
     		x.setAttribute("fill", "black");
             //update board
@@ -78,12 +73,17 @@ function makeMove(x){
             x.removeAttribute("onmouseout");
             x.removeAttribute("onclick");
 
+            //update last
+            state.last.x = xCoord;
+            state.last.y = yCoord;
+            state.last.pass = false;
+
             //if army surrounded
              for(var i = 0; i < state.keyLiberties.length; i++){
                     if(state.keyLiberties[i].place[0] == xCoord && state.keyLiberties[i].place[1] == yCoord && state.keyLiberties[i].colour == 1){
 
                         //remove tokens, give team points, remove keyLiberty from keyLiberties
-                        removeTokens(state.keyLiberties[i].army);
+                        removeTokens(state.keyLiberties[i].army, 2);
                         state.black += state.keyLiberties[i].size
                         state.keyLiberties.splice(i,1);
                         //alert("AI's army has been captured!");
@@ -93,7 +93,11 @@ function makeMove(x){
 	}else{
         if(check_illegal_move(xCoord, yCoord, checkMove) == 0){
             alert("Illegal move!");
-        }else{
+        }
+        else if(checkTerr(xCoord, yCoord, 1) == false){
+            alert("Illegal move!");
+        }
+        else{
     		x.setAttribute("fill", "white");
     		x.setAttribute("stroke", "black");
         	x.setAttribute("stroke-width", 1);
@@ -105,13 +109,17 @@ function makeMove(x){
             x.removeAttribute("onmouseout");
             x.removeAttribute("onclick");
 
+            //update last
+            state.last.x = xCoord;
+            state.last.y = yCoord;
+            state.last.pass = false;
 
             //if army surrounded
             for(var i = 0; i < state.keyLiberties.length; i++){
                  if(state.keyLiberties[i].place[0] == xCoord && state.keyLiberties[i].place[1] == yCoord && state.keyLiberties[i].colour == 2){
 
                     //remove tokens, give team points, remove keyLiberty from keyLiberties
-                    removeTokens(state.keyLiberties[i].army);
+                    removeTokens(state.keyLiberties[i].army, 1);
                     state.black += state.keyLiberties[i].size
                     state.keyLiberties.splice(i,1);
                     //alert("AI's army has been captured!");
@@ -120,8 +128,12 @@ function makeMove(x){
         }
 	}
 
-    //capture(x);
+    capture(x);
     console.log(state.board);
+
+    //call get army
+    getArmy.open("GET", "/army", true);
+    getArmy.send();
 
     //send updated state to server
     sendBoard();

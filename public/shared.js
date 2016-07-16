@@ -12,6 +12,7 @@ var theme = 0;
 var state = {
    "size": 0,
    "board": [],
+   "tboard":[],
    "last": {
         "x" : 0,
         "y" : 0,
@@ -38,7 +39,7 @@ class keyLiberty {
 }
 
 //deletes a passed in army
-function removeTokens(tokens){
+function removeTokens(tokens, colour){
     for(var i = 0; i < tokens.length; i ++){
         var x = tokens[i].position[1];
         var y = tokens[i].position[0];
@@ -46,6 +47,8 @@ function removeTokens(tokens){
         console.log("remove y: " + x);
         
         state.board[y][x] = 0;
+
+        state.tboard[y][x] = colour;
         
         console.log(state.board);
         
@@ -237,12 +240,29 @@ function init(){
             //set theme info
             state.theme = temp["theme"];
             state.colour = temp["colour"];
+
+            state.tboard = temp["tboard"];
+            
             theme = temp["theme"];
             colorBoard = temp["colour"];
 
             //create board and prevent new board from being created
-            if(state.refresh == false)
+            if(state.refresh == false) {
                 drawBoard(generateBoard(state.size));
+
+                //create temp board which stores captured territory
+                var tmp = [];
+                for(var i = 0; i < state.size; i++){
+                    tmp = []
+                    for(var j = 0; j < state.size; j++)
+                        tmp.push(0);
+                   
+                    state.tboard.push(tmp);
+                }
+
+                console.log(state.tboard);
+                sendBoard();
+            }
             else
                 drawBoard(state);
 
@@ -347,21 +367,34 @@ function check_illegal_move(x, y, color){
     return liberty;
 }
 
+//check if trying to place opposite token in captured territory 
+function checkTerr(x, y, c){
+    if(state.tboard[x][y] == c)
+        return true;
+    if(state.tboard[x][y] == 0)
+        return true;
+    return false;
+}
+
 function capture(x){
     console.log("find capture x: ", x)
     for(i = 0; i < state.size; i++){
         for(j = 0; j < state.size; j++){
             if(check_illegal_move(i,j,state.board[i][j]) == 0){
-                alert("Token has been captured!");
+                //alert("Token has been captured!");
                 state.board[i][j] = 0;
 
-                //update score to account for captured territory
-                if(checkMove == 1)
+                //update score and tboard to account for captured territory
+                if(checkMove == 1){
                     state.white--;
-                if(checkMove == 2)
+                    state.tboard[i][j] == 2;
+                }
+                if(checkMove == 2){
                     state.black--;
+                    state.tboard[i][j] == 1;
+                }
 
-                console.log("score")
+                //console.log("score")
 
                 drawBoard(state);
             }
