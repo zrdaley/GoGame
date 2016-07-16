@@ -162,6 +162,7 @@ function generateBoard(size){
     }
 
     //prevent duplicate boards
+    state.refresh = true;
     sendBoard();
 
     return state;
@@ -337,7 +338,7 @@ function capture(x){
         }
     }
 
-    console.log("AFTER MOVE", state.board)
+    //console.log("AFTER MOVE", state.board)
 }
 
 

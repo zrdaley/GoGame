@@ -1,5 +1,5 @@
 
-function getRandomMove(size, board, x, y, c, pass, cb){
+function getRandomMove(size, board, x, y, c, pass, path, cb){
 	var http = require('http');
 	var postData = {
 		'size':  size,
@@ -14,7 +14,7 @@ function getRandomMove(size, board, x, y, c, pass, cb){
 	var move;
 	var options = {
 		host:'roberts.seng.uvic.ca',
-		path:'/ai/maxLibs',
+		path: path,
 		port: '30000',
 		method: 'POST',
 		headers:{
