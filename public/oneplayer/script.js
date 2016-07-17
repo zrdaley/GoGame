@@ -35,10 +35,16 @@ function changeColorBack(x){
 }
 
 function makeMove(x){
-   //decrypt coordinate of placed token
-    var numOfPix = ((500)/(state.size-1));
-    var yCoord = Math.round(((x.cx.baseVal.value) / numOfPix) - 0.8);
-    var xCoord = Math.round(((x.cy.baseVal.value) / numOfPix) - 0.8);
+    //decrypt coordinate of placed token
+    if (state.size == 19){
+    	var numOfPix = ((500)/(state.size-1));//27.777777
+    	var yCoord = Math.round(((x.cx.baseVal.value) / numOfPix) - 1.8);
+    	var xCoord = Math.round(((x.cy.baseVal.value) / numOfPix) - 1.8);
+    }else{
+    	var numOfPix = ((500)/(state.size-1));//41.6666666
+    	var yCoord = Math.round(((x.cx.baseVal.value) / numOfPix) - 0.8);
+    	var xCoord = Math.round(((x.cy.baseVal.value) / numOfPix) - 0.8);
+    }
     //console.log(xCoord);
     //console.log(yCoord);
 
