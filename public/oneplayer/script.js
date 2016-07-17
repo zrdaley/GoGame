@@ -76,7 +76,7 @@ function makeMove(x){
 
     
     //send updated state to server
-    capture(x);
+    //capture(x);
     sendBoard();
 
     //if army surrounded
@@ -142,7 +142,10 @@ AIMove.onreadystatechange = function() {
                  }
                  //check if trying to place token in captured territory
                  else if(checkTerr(move["x"], move["y"], 1) == false){
-                         alert("Illegal move!");
+                         //alert("Illegal move!");
+                        //call AI
+                        AIMove.open("GET", "/move", true);
+                        AIMove.send();
 
                  } 
                  //if the move is valid

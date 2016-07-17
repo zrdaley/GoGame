@@ -39,6 +39,77 @@ class keyLiberty {
     }
 }
 
+//initializes game state
+function init(){
+    var temp;
+    xhr.open("GET", "/board", true);
+    xhr.send();
+
+    xhr.onreadystatechange = function() {
+        if(xhr.readyState == 4 && xhr.status == 200) {
+
+            temp = JSON.parse(xhr.responseText);
+            state.size = temp["size"];
+            state.board = temp["board"];
+            state.last = temp["last"];
+            state.handiCap = temp["handiCap"];
+            state.refresh = temp["refresh"];
+            
+            //update score
+            state.white = temp["white"];
+            state.black = temp["black"];
+
+            //set theme info
+            state.theme = temp["theme"];
+            state.colour = temp["colour"];
+
+            state.tboard = temp["tboard"];
+            
+            theme = temp["theme"];
+            colorBoard = temp["colour"];
+
+            //create board and prevent new board from being created
+            if(state.refresh == false) {
+                drawBoard(generateBoard(state.size));
+
+                //create temp board which stores captured territory
+                var tmp = [];
+                for(var i = 0; i < state.size; i++){
+                    tmp = []
+                    for(var j = 0; j < state.size; j++)
+                        tmp.push(0);
+                   
+                    state.tboard.push(tmp);
+                }
+
+                console.log(state.tboard);
+                sendBoard();
+            }
+            else
+                drawBoard(state);
+
+        }
+        if(theme ==1){
+            document.body.style.backgroundImage = "url('../img/geisha.jpg')";
+            document.body.style.backgroundRepeat = "no-repeat";
+            document.body.style.backgroundPosition = "center right";
+        }
+        if(theme == 2){
+            document.body.style.backgroundImage = "url('../img/sam.jpg')";
+            document.body.style.backgroundRepeat = "no-repeat";
+            document.body.style.backgroundPosition = "center right";
+         }
+    }
+
+}
+
+//on home page click
+function logoutConfirm() {
+    if(window.confirm('Really log out and go to home page? Current game progress will be lost.')){
+        window.location.href="../index.html";
+    }
+}
+
 //deletes an army that has been captured
 function removeTokens(tokens, colour){
     for(var i = 0; i < tokens.length; i ++){
@@ -150,6 +221,7 @@ function sendBoard(){
     postXhr.send(JSON.stringify(state));
 }
 
+//sets handicaps if enabled
 function handiCap(element) {
    if(element.checked){
         state.handiCap = true;
@@ -161,7 +233,7 @@ function handiCap(element) {
     sendBoard();
 }
 
-
+//generates a new board
 function generateBoard(size){
 
     var tmp = [];
@@ -213,75 +285,7 @@ function isValid(board,move){
 	return true;
 }
 
-function logoutConfirm() {
-    if(window.confirm('Really log out and go to home page? Current game progress will be lost.')){
-        window.location.href="../index.html";
-    }
-}
 
-//part of board size from dropdown
-function init(){
-    var temp;
-    xhr.open("GET", "/board", true);
-    xhr.send();
-
-    xhr.onreadystatechange = function() {
-        if(xhr.readyState == 4 && xhr.status == 200) {
-
-            temp = JSON.parse(xhr.responseText);
-            state.size = temp["size"];
-            state.board = temp["board"];
-            state.last = temp["last"];
-            state.handiCap = temp["handiCap"];
-            state.refresh = temp["refresh"];
-            
-            //update score
-            state.white = temp["white"];
-            state.black = temp["black"];
-
-            //set theme info
-            state.theme = temp["theme"];
-            state.colour = temp["colour"];
-
-            state.tboard = temp["tboard"];
-            
-            theme = temp["theme"];
-            colorBoard = temp["colour"];
-
-            //create board and prevent new board from being created
-            if(state.refresh == false) {
-                drawBoard(generateBoard(state.size));
-
-                //create temp board which stores captured territory
-                var tmp = [];
-                for(var i = 0; i < state.size; i++){
-                    tmp = []
-                    for(var j = 0; j < state.size; j++)
-                        tmp.push(0);
-                   
-                    state.tboard.push(tmp);
-                }
-
-                console.log(state.tboard);
-                sendBoard();
-            }
-            else
-                drawBoard(state);
-
-        }
-        if(theme ==1){
-            document.body.style.backgroundImage = "url('../img/geisha.jpg')";
-            document.body.style.backgroundRepeat = "no-repeat";
-            document.body.style.backgroundPosition = "center right";
-        }
-        if(theme == 2){
-            document.body.style.backgroundImage = "url('../img/sam.jpg')";
-            document.body.style.backgroundRepeat = "no-repeat";
-            document.body.style.backgroundPosition = "center right";
-         }
-    }
-
-}
 
 function undoMove(){
     //remove last move from board
@@ -416,7 +420,7 @@ getArmy.onreadystatechange = function() {
             console.log("number of armies: " + army.length);
             state.keyLiberties = [];
 
-            //for each army, check its liberties, of an army only had one liberty, it is stored as a key liberty
+            //for each army, check its liberties, if an army only had one liberty, it is stored as a key liberty
             for(var i = 0; i < army.length; i ++){
                  if(army[i].liberties.length === 1){
                         var newKey = new keyLiberty(army[i].liberties[0], army[i].colour, army[i].tokens, army[i].size);
@@ -429,14 +433,6 @@ getArmy.onreadystatechange = function() {
             sendBoard();
         }     
 }
-
-
-
-
-
-/*END GAME LOGIC*/
-
-
 
 
 /*BEGIN CHECK TERRITORY CODE*/
@@ -566,15 +562,6 @@ function checkTerritory(){
     var t_white = 0;
     var t_black = 0;
 
-    // var t = bfs(0,0,visited);
-    // alert("t>>>>>>" + t[0] + "  color" + t[1]);
-
-    // t = bfs(5,0,visited);
-    // alert("t>>>>>>" + t[0] + "  color" + t[1]);
-
-    // t = bfs(7,0,visited);
-    // alert("t>>>>>>" + t[0] + "  color" + t[1]);
-
     //traverse all blank intersections
     for(var i = 0; i < state.size; i++){
         for(var j = 0; j < state.size; j++){
@@ -588,9 +575,9 @@ function checkTerritory(){
         }
     }
 
-    //alert("territory for white is: "+ t_white +"\nterritory for black is: " + t_black);
-
     var ret = [t_white, t_black];
     return ret;
 
 }
+
+/*END TERRITORY CODE*/

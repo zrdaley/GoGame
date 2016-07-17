@@ -90,6 +90,30 @@ function searchAccount(object){
 
 }
 
+function getWins(object){
+	var userName = document.getElementById("userName").value;
+	var password = document.getElementById("password").value;
+
+	var checkPass = 0;
+	//alert(object[1].name);
+	//alert(object[1].password);
+	for(var i = 0; i < object.length; i++){
+		if(userName.localeCompare(object[i].name) == 0 && password.localeCompare(object[i].password) == 0){
+			// console.log("the login successfully");
+			// alert("Successful login!");
+			checkPass = checkPass + 1;
+			window.location.href="../oneplayer/new-oneplayer.html";
+			break;
+		}
+	}
+
+	if(checkPass == 0){
+		alert("Invalid username and/or password! Please try again.");
+	}
+
+
+}
+
 
 function init(){
 	console.log("Initializing Go application...");
