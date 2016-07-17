@@ -55,15 +55,14 @@ function makeMove(x){
         x.removeAttribute("onmouseover");
         x.removeAttribute("onmouseout");
         x.removeAttribute("onclick");
+
+        //update board state
+        state.last.x = xCoord;
+        state.last.y = yCoord;
+        console.log(state.last);
     }
 
-    //update board state
-    state.board[xCoord][yCoord] = 2;
-    console.log(state.board);
-    state.last.x = xCoord;
-    state.last.y = yCoord;
-    console.log(state.last);
-
+    
     //send updated state to server
     capture(x);
     sendBoard();
@@ -87,6 +86,10 @@ function makeMove(x){
     //call AI
     AIMove.open("GET", "/move", true);
     AIMove.send();
+
+    //call get army
+    getArmy.open("GET", "/army", true);
+    getArmy.send();
 
 }
 

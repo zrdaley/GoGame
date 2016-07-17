@@ -397,6 +397,7 @@ function capture(x){
                 //console.log("score")
 
                 drawBoard(state);
+                sendBoard();
             }
         }
     }
@@ -410,6 +411,7 @@ getArmy.onreadystatechange = function() {
             army = temp["armies"];
 
             console.log("number of armies: " + army.length);
+            state.keyLiberties = [];
 
             //for each army, check its liberties, of an army only had one liberty, it is stored as a key liberty
             for(var i = 0; i < army.length; i ++){
@@ -418,9 +420,11 @@ getArmy.onreadystatechange = function() {
                         
                         //console.log(newKey);
                         state.keyLiberties.push(newKey);
-                        sendBoard();
+    
                  }
             }
+
+            sendBoard();
         }     
 }
 
