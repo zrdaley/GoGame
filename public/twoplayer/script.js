@@ -146,27 +146,6 @@ function makeMove(x){
 
 }
 
-function gameOver(){
-    var bcount, wcount;
-
-    //count number of territories here and add to score for each here
-
-    //tells player who wins then goes back home
-    if(state.black > state.white) {
-        alert("Black Won!\nBlack's Score: " + state.black + " \nWhite's Score: " + state.white);
-        setTimeout(function(){window.location.href="../index.html"}, 0);
-    }
-    if(state.white > state.black) {
-        alert("Black Won!\nBlack's Score: " + state.black + " \nWhite's Score: " + state.white);
-        setTimeout(function(){window.location.href="../index.html"}, 0);
-    }
-    if (state.white == state.black) {
-        alert("Tie!\nBlack's Score: " + state.black + " \nWhite's Score: " + state.white);
-        setTimeout(function(){window.location.href="../index.html"}, 0);
-    }
-}
-
-
 //pass
 function getMove(){
 	if (state.last.pass == true){//two passes in a row = game over
@@ -201,6 +180,28 @@ function undoMove(){
 	}
 	else
 		alert("Can't undo move after next player has already begun turn")
+}
+
+function gameOver(){
+
+    //count number of territories here and add to score for each here
+    var terr = checkTerritory();
+    state.white += terr[0];
+    state.black += terr[1];
+
+    //tells player who wins then goes back home
+    if(state.black > state.white) {
+        alert("Black Won!\nBlack's Score: " + state.black + " \nWhite's Score: " + state.white);
+        setTimeout(function(){window.location.href="../index.html"}, 0);
+    }
+    if(state.white > state.black) {
+        alert("Black Won!\nBlack's Score: " + state.black + " \nWhite's Score: " + state.white);
+        setTimeout(function(){window.location.href="../index.html"}, 0);
+    }
+    if (state.white == state.black) {
+        alert("Tie!\nBlack's Score: " + state.black + " \nWhite's Score: " + state.white);
+        setTimeout(function(){window.location.href="../index.html"}, 0);
+    }
 }
 
 

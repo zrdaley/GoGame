@@ -435,3 +435,162 @@ getArmy.onreadystatechange = function() {
 
 
 /*END GAME LOGIC*/
+
+
+
+
+/*BEGIN CHECK TERRITORY CODE*/
+
+
+function contains(a ,obj){
+    var i = a.length;
+    while (i--) {
+            //alert(i+ " here>>>" + a[i]);
+            //alert(i+ " here>>>" + obj);
+       if (a[i][0] == obj[0] && a[i][1] == obj[1]) {
+            return true;
+       }
+    }
+    return false;
+}
+
+//use Breadth First Search for counting territory
+function bfs(i,j,visited){
+    var queue = [];
+    var curr_node = [i,j];
+    //store visited node in this bfs
+    var local_visited = [[i,j]];
+    var edge = [];
+    var territory = 1;
+    //var count = 0;
+
+    while(curr_node){
+        var x = curr_node[0];
+        var y = curr_node[1];
+        if(x != 0){
+            if(contains(local_visited, [x-1,y]) == false){
+                 if(state.board[x-1][y] == 0){
+                     local_visited.push([x-1,y]);
+                     visited.push([x-1,y]);
+                     queue.push([x-1,y]);
+                     territory++;
+                     //alert("territory: " +territory + "  " +[x-1,y]);
+                 }
+                 else{
+                    //alert("edge + " + [x-1, y]);
+                    edge.push(state.board[x-1][y]);
+
+                 }
+             }
+        }
+
+        if(x != state.size - 1){
+            if(contains(local_visited, [x+1,y]) == false){
+                if(state.board[x+1][y] == 0){
+                    local_visited.push([x+1,y]);
+                    visited.push([x+1,y]);
+                    queue.push([x+1,y]);
+                    territory++;
+                    //alert("territory: " +territory + "  " +[x+1,y]);
+                }
+                else{ 
+                    //alert("edge is " + [x+1,y]);
+                    edge.push(state.board[x+1][y]);
+                }
+            }
+        }
+
+        if(y != 0){
+            if(contains(local_visited, [x,y-1]) == false){
+                if(state.board[x][y-1] == 0){
+                    local_visited.push([x,y-1]);
+                    visited.push([x,y-1]);
+                    queue.push([x,y-1]);
+                    territory++;
+                    //alert("territory: " +territory + "  " +[x,y-1]);
+                 
+                }
+                else{
+                    //alert("edge is " + [x, y-1]);
+                    edge.push(state.board[x][y-1]);
+                }
+            }
+
+        }
+
+        if(y != state.size -1){
+            if(contains(local_visited, [x,y+1]) == false){
+                if(state.board[x][y+1] == 0){
+                    local_visited.push([x,y+1]);
+                    visited.push([x,y+1]);
+                    queue.push([x,y+1]);
+                    territory++;
+                    //alert("territory: " +territory + "  " +[x,y+1]);
+                 
+                }
+                else{
+                    //alert("edge is " + [x, y+1]);
+                    edge.push(state.board[x][y+1]);
+                }
+            }
+        }
+        //count++;
+
+        curr_node = queue.shift();
+    }
+
+
+    var i = edge.length;
+
+    //check if this area is surrounded by same color tokens
+    //if it is not, it is not a valid territory
+    while(i--){
+        if(edge[i] != edge[0]){
+            territory = 0;
+            break;
+        }
+    }
+    if (territory != 0)
+
+        return [territory, edge[0]];
+    else{
+        //alert(curr_node);
+        return [territory, 0];
+    }
+}
+
+
+function checkTerritory(){
+    //to store all visited intersections
+    var visited = [];
+    var t_white = 0;
+    var t_black = 0;
+
+    // var t = bfs(0,0,visited);
+    // alert("t>>>>>>" + t[0] + "  color" + t[1]);
+
+    // t = bfs(5,0,visited);
+    // alert("t>>>>>>" + t[0] + "  color" + t[1]);
+
+    // t = bfs(7,0,visited);
+    // alert("t>>>>>>" + t[0] + "  color" + t[1]);
+
+    //traverse all blank intersections
+    for(var i = 0; i < state.size; i++){
+        for(var j = 0; j < state.size; j++){
+            if(state.board[i][j] == 0 && contains(visited,[i,j]) == false){
+                var temp_territory = bfs(i,j,visited);
+                if(temp_territory[1] == 1)
+                    t_white += temp_territory[0];
+                if(temp_territory[1] == 2)
+                    t_black += temp_territory[0];
+            }
+        }
+    }
+
+    //alert("territory for white is: "+ t_white +"\nterritory for black is: " + t_black);
+
+    var ret = [t_white, t_black];
+    return ret;
+
+}

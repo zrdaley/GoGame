@@ -135,7 +135,7 @@ AIMove.onreadystatechange = function() {
                         AIMove.send();
                  }
                  //check if trying to place token in captured territory
-                 else if(checkTerr(xCoord, yCoord, 1) == false){
+                 else if(checkTerr(move["x"], move["y"], 1) == false){
                          alert("Illegal move!");
 
                  } 
@@ -177,15 +177,24 @@ AIMove.onreadystatechange = function() {
 
 
 function gameOver(){
-    
+
+    //count number of territories here and add to score for each here
+    var terr = checkTerritory();
+    state.white += terr[0];
+    state.black += terr[1];  
+
     //tells player who wins then goes back home
     if(state.black > state.white) {
         alert("You Won! You now have ? wins! \nYour Score: " + state.black + " \n AI's Score: " + state.white);
         setTimeout(function(){window.location.href="../index.html"}, 0);
     }
-    else {
+    if(state.white > state.black) {
         alert("AI Won...\nYour Score: " + state.black + " \nAI's Score: " + state.white)
         setTimeout(function(){window.location.href="../index.html"}, 0);
+    }
+    if(state.white == state.black) {
+        alert("Tie!\nYour Score: " + state.black + " \nAI's Score: " + state.white)
+        setTimeout(function(){window.location.href="../index.html"}, 0);  
     }
 }
 
