@@ -9,6 +9,7 @@ var colorBoard;//base color
 var moveUndone = false;
 var theme = 0;
 
+//holds all the boards information
 var state = {
    "size": 0,
    "board": [],
@@ -38,7 +39,7 @@ class keyLiberty {
     }
 }
 
-//deletes a passed in army
+//deletes an army that has been captured
 function removeTokens(tokens, colour){
     for(var i = 0; i < tokens.length; i ++){
         var x = tokens[i].position[1];
@@ -57,6 +58,7 @@ function removeTokens(tokens, colour){
     drawBoard(state);
 }
 
+//sets theme functionality
 function setTheme(val){
     themeClicked = 1;
     state.theme = val;
@@ -70,7 +72,7 @@ function setTheme(val){
     sendBoard();
 }
 
-
+//draws the board on the UI
 function drawBoard(state){
 
     var canvas = $("#canvas");
@@ -301,6 +303,7 @@ function undoMove(){
         alert("Can't undo move after next player has already begun turn")
 }
 
+//checks if a token is trying to be placed in the middle of four opposing tokens
 function check_illegal_move(x, y, color){
     var liberty = 4;
     //check for white token
@@ -423,7 +426,6 @@ getArmy.onreadystatechange = function() {
     
                  }
             }
-
             sendBoard();
         }     
 }

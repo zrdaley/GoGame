@@ -45,7 +45,13 @@ function makeMove(x){
     //check for illegal move on players part
     if(check_illegal_move(xCoord, yCoord, 2) == 0){
             alert("Illegal move!");
-    }else{  
+    }
+    //check if trying to place token in captured territory
+    else if(checkTerr(xCoord, yCoord, 2) == false){
+            alert("Illegal move!");
+    }
+    //if the move is valid
+    else{  
         console.log("what is x: ",x) 
         x.setAttribute("fill", "black");
         //update board
@@ -71,9 +77,9 @@ function makeMove(x){
     for(var i = 0; i < state.keyLiberties.length; i++){
          if(state.keyLiberties[i].place[0] == xCoord && state.keyLiberties[i].place[1] == yCoord && state.keyLiberties[i].colour == 1){
 
-                //remove tokens, give team points, remove keyLiberty from keyLiberties
+                //remove tokens, subtract captures from whites score, remove keyLiberty from keyLiberties
                 removeTokens(state.keyLiberties[i].army, 2);
-                state.black += state.keyLiberties[i].size
+                state.white -= state.keyLiberties[i].size
                 state.keyLiberties.splice(i,1);
                 //alert("AI's army has been captured!");
         }
@@ -121,14 +127,20 @@ AIMove.onreadystatechange = function() {
             var move = JSON.parse(AIMove.responseText);
             //update last
             if (!move["pass"]){//if AI did not pass
-                 
+                 //check if legal move
                  if(check_illegal_move(move["x"], move["y"], 1) == 0){
                         //alert("Illegal move!");
                         //call AI
                         AIMove.open("GET", "/move", true);
                         AIMove.send();
+                 }
+                 //check if trying to place token in captured territory
+                 else if(checkTerr(xCoord, yCoord, 1) == false){
+                         alert("Illegal move!");
 
-                 } else {
+                 } 
+                 //if the move is valid
+                 else {
                      state.board[move["x"]][move["y"]] = move["c"];
     			     state.last.x = move["x"];
     			     state.last.y = move["y"];
@@ -138,9 +150,9 @@ AIMove.onreadystatechange = function() {
                     for(var i = 0; i < state.keyLiberties.length; i++){
                         if(state.keyLiberties[i].place[0] == move["x"] && state.keyLiberties[i].place[1] == move["y"] && state.keyLiberties[i].colour == 2){
                     
-                            //remove tokens, give team points, remove keyLiberty from keyLiberties
+                            //remove tokens, subtract captures from blacks score, remove keyLiberty from keyLiberties
                             removeTokens(state.keyLiberties[i].army, 1);
-                            state.white += state.keyLiberties[i].size
+                            state.black -= state.keyLiberties[i].size
                             state.keyLiberties.splice(i,1);
                             //alert("Your army has been captured!");
                         }
