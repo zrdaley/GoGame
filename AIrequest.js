@@ -34,7 +34,8 @@ function getRandomMove(size, board, x, y, c, pass, path, cb){
 			if(response.statusCode === 200){
 				cb(JSON.parse(string));
 			}else{
-				console.log("The status code does not equal 200, in AIrequest.js");
+				console.log("The status code does not equal 200, in AIrequest.js. The statusCode is: " +response.statusCode);
+				cb(response.statusCode);
 			}
 		});
 	}

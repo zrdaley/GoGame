@@ -62,14 +62,14 @@ function makeMove(x){
 
     //check for illegal move on players part
     if(check_illegal_move(xCoord, yCoord, 2) == 0){
-            alert("Illegal move!");
-    }
-    //check if trying to place token in captured territory
-    else if(checkTerr(xCoord, yCoord, 2) == false){
-            alert("Illegal move!");
-    }
-    //if the move is valid
-    else{
+            alert("Illegal move on board!");
+//     }
+//     //check if trying to place token in captured territory
+//     else if(checkTerr(xCoord, yCoord, 2) == false){
+//             alert("Illegal move on board!");
+//     }
+//     //if the move is valid
+    }else{
         console.log("what is x: ",x)
         x.setAttribute("fill", "black");
         //update board
@@ -84,37 +84,37 @@ function makeMove(x){
         state.last.x = xCoord;
         state.last.y = yCoord;
         console.log(state.last);
+
+		capture(x);
+
+		//send updated state to server
+		sendBoard();
+
+		//if army surrounded
+		for(var i = 0; i < state.keyLiberties.length; i++){
+			 if(state.keyLiberties[i].place[0] == xCoord && state.keyLiberties[i].place[1] == yCoord && state.keyLiberties[i].colour == 1){
+
+					//remove tokens, subtract captures from whites score, remove keyLiberty from keyLiberties
+					removeTokens(state.keyLiberties[i].army, 1);
+					state.white -= state.keyLiberties[i].size
+					state.keyLiberties.splice(i,1);
+					//alert("AI's army has been captured!");
+			}
+		}
+
+		//call get army
+		getArmy.open("GET", "/army", true);
+		getArmy.send();
+
+		//call AI
+		AIMove.open("GET", "/move", true);
+		AIMove.send();
+		capture(x);
+
+		//call get army
+		getArmy.open("GET", "/army", true);
+		getArmy.send();
     }
-
-    capture(x);
-
-    //send updated state to server
-    sendBoard();
-
-    //if army surrounded
-    for(var i = 0; i < state.keyLiberties.length; i++){
-         if(state.keyLiberties[i].place[0] == xCoord && state.keyLiberties[i].place[1] == yCoord && state.keyLiberties[i].colour == 1){
-
-                //remove tokens, subtract captures from whites score, remove keyLiberty from keyLiberties
-                removeTokens(state.keyLiberties[i].army, 1);
-                state.white -= state.keyLiberties[i].size
-                state.keyLiberties.splice(i,1);
-                //alert("AI's army has been captured!");
-        }
-    }
-
-    //call get army
-    getArmy.open("GET", "/army", true);
-    getArmy.send();
-
-    //call AI
-    AIMove.open("GET", "/move", true);
-    AIMove.send();
-    capture(x);
-
-    //call get army
-    getArmy.open("GET", "/army", true);
-    getArmy.send();
 
 }
 
@@ -144,8 +144,9 @@ AIMove.onreadystatechange = function() {
 
             //update board
             var move = JSON.parse(AIMove.responseText);
-            //update last
-            if (!move["pass"]){//if AI did not pass
+            if (move === 400){
+            	alert("Invalid respones from server, something is broken");
+            }else if (!move["pass"]){//if AI did not pass
                  //check if legal move
                  if(check_illegal_move(move["x"], move["y"], 1) == 0){
                         //alert("Illegal move!");
