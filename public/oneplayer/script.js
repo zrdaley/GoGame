@@ -10,7 +10,7 @@ function checkOnePlyrBoard() {
         alert("Please choose a board size.");
     }
     if (themeClicked == 0) {
-        alert("Please choose a theme.");  
+        alert("Please choose a theme.");
     }else if(boardSizeClicked == 1) {
         window.location.href="login/login.html";
     }
@@ -27,7 +27,7 @@ function displayWins(){
     var userData = new XMLHttpRequest();
     userData.open("GET", "/userName", true);
     userData.send();
-    
+
     userData.onreadystatechange = function() {
         if(userData.readyState == 4 && userData.status == 200) {
             var temp = JSON.parse(userData.responseText);
@@ -69,8 +69,8 @@ function makeMove(x){
             alert("Illegal move!");
     }
     //if the move is valid
-    else{  
-        console.log("what is x: ",x) 
+    else{
+        console.log("what is x: ",x)
         x.setAttribute("fill", "black");
         //update board
         state.board[xCoord][yCoord] = 2;
@@ -86,9 +86,9 @@ function makeMove(x){
         console.log(state.last);
     }
 
-    
+    capture(x);
+
     //send updated state to server
-    //capture(x);
     sendBoard();
 
     //if army surrounded
@@ -96,7 +96,7 @@ function makeMove(x){
          if(state.keyLiberties[i].place[0] == xCoord && state.keyLiberties[i].place[1] == yCoord && state.keyLiberties[i].colour == 1){
 
                 //remove tokens, subtract captures from whites score, remove keyLiberty from keyLiberties
-                removeTokens(state.keyLiberties[i].army, 2);
+                removeTokens(state.keyLiberties[i].army, 1);
                 state.white -= state.keyLiberties[i].size
                 state.keyLiberties.splice(i,1);
                 //alert("AI's army has been captured!");
@@ -106,10 +106,11 @@ function makeMove(x){
     //call get army
     getArmy.open("GET", "/army", true);
     getArmy.send();
-   
+
     //call AI
     AIMove.open("GET", "/move", true);
     AIMove.send();
+    capture(x);
 
     //call get army
     getArmy.open("GET", "/army", true);
@@ -139,7 +140,7 @@ function getMove(){
 //Upon AI request return
 AIMove.onreadystatechange = function() {
         if(AIMove.readyState == 4 && AIMove.status == 200) {
-            
+
 
             //update board
             var move = JSON.parse(AIMove.responseText);
@@ -159,7 +160,7 @@ AIMove.onreadystatechange = function() {
                         AIMove.open("GET", "/move", true);
                         AIMove.send();
 
-                 } 
+                 }
                  //if the move is valid
                  else {
                      state.board[move["x"]][move["y"]] = move["c"];
@@ -170,9 +171,9 @@ AIMove.onreadystatechange = function() {
                      //if army surrounded
                     for(var i = 0; i < state.keyLiberties.length; i++){
                         if(state.keyLiberties[i].place[0] == move["x"] && state.keyLiberties[i].place[1] == move["y"] && state.keyLiberties[i].colour == 2){
-                    
+
                             //remove tokens, subtract captures from blacks score, remove keyLiberty from keyLiberties
-                            removeTokens(state.keyLiberties[i].army, 1);
+                            removeTokens(state.keyLiberties[i].army, 2);
                             state.black -= state.keyLiberties[i].size
                             state.keyLiberties.splice(i,1);
                             //alert("Your army has been captured!");
@@ -202,7 +203,7 @@ function gameOver(){
     //count number of territories here and add to score for each here
     var terr = checkTerritory();
     state.white += terr[0];
-    state.black += terr[1];  
+    state.black += terr[1];
 
     //tells player who wins then goes back home
     if(state.black > state.white) {
@@ -215,10 +216,6 @@ function gameOver(){
     }
     if(state.white == state.black) {
         alert("Tie!\nYour Score: " + state.black + " \nAI's Score: " + state.white)
-        setTimeout(function(){window.location.href="../index.html"}, 0);  
+        setTimeout(function(){window.location.href="../index.html"}, 0);
     }
 }
-
-
-
-
