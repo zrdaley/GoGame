@@ -14,6 +14,7 @@ app.use(express.static('public'));
 //create AI request and board
 var AIrequest = require('./AIrequest');
 var Board;
+var userName;
 
 app.get("/login", function(req, res){
 	console.log("GET Request to: /login");
@@ -72,6 +73,24 @@ app.post("/board", function (req, res) {
     console.log(Board);
 
     res.status(200).send();
+});
+
+app.post("/userName", function (req, res) {
+
+    console.log("POST Request to: /userName");
+
+    userName = req.body;
+    console.log(userName);
+
+    res.status(200).send();
+});
+
+app.get("/userName", function (req, res) {
+
+    console.log("GET Request to: /userName");
+    console.log(userName);
+
+    res.json(userName);
 });
 
 app.get("/board", function (req, res) {

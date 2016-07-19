@@ -70,6 +70,8 @@ function searchAccount(object){
 	var userName = document.getElementById("userName").value;
 	var password = document.getElementById("password").value;
 
+	var user = {name: userName, wins: 0};
+
 	var checkPass = 0;
 	//alert(object[1].name);
 	//alert(object[1].password);
@@ -78,6 +80,15 @@ function searchAccount(object){
 			// console.log("the login successfully");
 			// alert("Successful login!");
 			checkPass = checkPass + 1;
+
+			//store username/wins in server
+			user.wins = object[i].win;
+			var postXhr = new XMLHttpRequest();
+    		postXhr.open("POST", "/userName", true);
+    		postXhr.setRequestHeader("Content-type", "application/json");
+    		postXhr.send(JSON.stringify(user));
+
+
 			window.location.href="../oneplayer/new-oneplayer.html";
 			break;
 		}
@@ -123,6 +134,7 @@ function init(){
 			console.log("Error getting data: "+ err);
 			alert("Could not get data from server: "+err);
 		}else{
+			
 			console.log(data);
 			searchAccount(data);
 

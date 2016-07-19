@@ -41,7 +41,7 @@
                 <input id="userName" type="text" placeholder="Username" required/>
                 <input id="password" type="password" placeholder="Password" required/>
                 <!--  figure out how to link login to oneplayer page below -->
-                <button type = 'button' id = 'login_button' onclick = "init()">login</button>
+                <button type = 'button' id = 'login_button' onclick = "init(); displayWins();">login</button>
                 <p class="message">Not registered? <a href="#">Create an account</a></p>
             </form>
         </div>
@@ -58,6 +58,9 @@
     <script src="js/index.js"></script>
     <script type="text/javascript" src="../serverInterface.js"></script>
     <script type="text/javascript" src="../script.js"></script>
+    <script type="text/javascript" src="../oneplayer/script.js"></script>
+    
+
 
   </body>
 

@@ -5,7 +5,6 @@ var boardSizeClicked = 0;
 var themeClicked = 0;
 
 
-
 function checkOnePlyrBoard() {
     if (boardSizeClicked == 0) {
         alert("Please choose a board size.");
@@ -24,6 +23,19 @@ function setBoard(size) {
     sendBoard();
 }
 
+function displayWins(){
+    var userData = new XMLHttpRequest();
+    userData.open("GET", "/userName", true);
+    userData.send();
+    
+    userData.onreadystatechange = function() {
+        if(userData.readyState == 4 && userData.status == 200) {
+            var temp = JSON.parse(userData.responseText);
+            var win = temp["wins"];
+            document.getElementById("wins").innerHTML = "Wins: " + win;
+        }
+    }
+}
 
 //on mouse over for clicking
 function changeColor(x){

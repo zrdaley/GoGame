@@ -101,7 +101,11 @@ function init(){
          }
     }
 
+    displayWins();
+
 }
+
+
 
 //on home page click
 function logoutConfirm() {
