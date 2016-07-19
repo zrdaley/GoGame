@@ -1,5 +1,5 @@
 #Go Application
-A go web application created by Group 11 as a requirement of the Summer 2016 SENG299 course at the University of Victoria.
+A go web application created as a requirement of the Summer 2016 SENG299 course at the University of Victoria.
 
 This application allows a user to play go in two player mode or against the provided AI (https://github.com/sdiemert/goai).
 
