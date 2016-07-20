@@ -380,18 +380,19 @@ function check_illegal_move(x, y, color){
 function checkTerr(x, y, c){
      var liberty = 4;
     //check for white token
-        
-    if(state.board[x+1][y] != 0)
-        liberty--;
+    if(x != 0){
+        if(state.board[x+1][y] != 0)
+            liberty--;
 
-    if(state.board[x-1][y] != 0)
-        liberty--;
+        if(state.board[x-1][y] != 0)
+            liberty--;
       
-    if(state.board[x][y-1] != 0)
-        liberty--;
+        if(state.board[x][y-1] != 0)
+            liberty--;
    
-    if(state.board[x][y+1] != 0)
-        liberty--;
+        if(state.board[x][y+1] != 0)
+            liberty--;
+    }
    
     //if territory not surrounded and captured territory does not equal colour
     if(state.tboard[x][y] == c && liberty == 0)
