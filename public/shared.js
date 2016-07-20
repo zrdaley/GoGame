@@ -431,24 +431,28 @@ function capture(x){
 //Upon getArmy request return
 getArmy.onreadystatechange = function() {
         if(getArmy.readyState == 4 && getArmy.status == 200) {
-            var temp = JSON.parse(getArmy.responseText);
-            army = temp["armies"];
+            if(getArmy.responseText == 400){
+                console.log("BAD AI Army request")
+            }
+            else{
+                var temp = JSON.parse(getArmy.responseText);
+                var army = temp["armies"];
 
-            console.log("number of armies: " + army.length);
-            state.keyLiberties = [];
+                console.log("number of armies: " + army.length);
+                state.keyLiberties = [];
 
-            //for each army, check its liberties, if an army only had one liberty, it is stored as a key liberty
-            for(var i = 0; i < army.length; i ++){
-                 if(army[i].liberties.length === 1){
+                //for each army, check its liberties, if an army only had one liberty, it is stored as a key liberty
+                for(var i = 0; i < army.length; i ++){
+                     if(army[i].liberties.length === 1){
                         var newKey = new keyLiberty(army[i].liberties[0], army[i].colour, army[i].tokens, army[i].size);
                         
                         //console.log(newKey);
                         state.keyLiberties.push(newKey);
-    
-                 }
-            }
-            sendBoard();
-        }     
+                    }
+                }   
+                sendBoard();
+            }   
+        }  
 }
 
 

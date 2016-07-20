@@ -43,7 +43,12 @@ app.get("/army", function(req, res){
 	console.log("GET Request to: /army");
 
    AIrequest.getRandomMove(Board["size"], Board["board"], Board["last"]["x"],Board["last"]["y"], Board["last"]["c"], Board["last"]["pass"], '/util/findArmies', function(move){
-        res.json(move);
+        
+        if(err){
+            res.status(500).send();
+        }else{
+            res.json(move);
+        }
     });
 
 });
