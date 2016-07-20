@@ -6,7 +6,7 @@ var Storage = require('./lib/MongoDB');
 var app = express();
 
 //singleton use of database
-var db = new Storage(null, null, 'go');
+var db = new Storage(null, null, 'Group11Go');
 
 app.use(bodyParser.json());
 app.use(express.static('public'));
@@ -43,7 +43,7 @@ app.get("/army", function(req, res){
 	console.log("GET Request to: /army");
 
    AIrequest.getRandomMove(Board["size"], Board["board"], Board["last"]["x"],Board["last"]["y"], Board["last"]["c"], Board["last"]["pass"], '/util/findArmies', function(move){
-        
+
         if(err){
             res.status(500).send();
         }else{

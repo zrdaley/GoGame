@@ -184,6 +184,11 @@ li a {
     background-color: #333;
     box-shadow: 0 0 5px 2px #4574BF;
 }
+.samurai-button:focus {
+    background-color: #fff;
+    color: #333;
+    box-shadow: none;
+}
 
 .geisha-button {
     background: #fff;
@@ -201,4 +206,9 @@ li a {
 .geisha-button:active:hover {
     background-color: #333;
     box-shadow: 0 0 5px 2px #C44141;
+}
+.geisha-button:focus {
+    background-color: #fff;
+    box-shadow: 0 0 5px 2px #C44141;
+    color: #333;
 }
