@@ -63,13 +63,13 @@ function makeMove(x){
     //check for illegal move on players part
     if(check_illegal_move(xCoord, yCoord, 2) == 0){
             alert("Illegal move on board!");
-//     }
+     }
 //     //check if trying to place token in captured territory
-//     else if(checkTerr(xCoord, yCoord, 2) == false){
-//             alert("Illegal move on board!");
-//     }
+    // else if(checkTerr(xCoord, yCoord, 1) == false){
+    //         alert("Illegal move on board!");
+    // }
 //     //if the move is valid
-    }else{
+    else{
         console.log("what is x: ",x)
         x.setAttribute("fill", "black");
         //update board
@@ -155,13 +155,13 @@ AIMove.onreadystatechange = function() {
                         AIMove.send();
                  }
                  //check if trying to place token in captured territory
-                 else if(checkTerr(move["x"], move["y"], 1) == false){
-                         //alert("Illegal move!");
-                        //call AI
-                        AIMove.open("GET", "/move", true);
-                        AIMove.send();
+                 // else if(checkTerr(move["x"], move["y"], 2) == false){
+                 //         //alert("Illegal move!");
+                 //        //call AI
+                 //        AIMove.open("GET", "/move", true);
+                 //        AIMove.send();
 
-                 }
+                 // }
                  //if the move is valid
                  else {
                      state.board[move["x"]][move["y"]] = move["c"];

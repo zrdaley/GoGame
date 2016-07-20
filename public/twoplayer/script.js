@@ -68,7 +68,7 @@ function makeMove(x){
         if(check_illegal_move(xCoord, yCoord, checkMove) == 0){
             alert("Illegal move!");
         }
-        else if(checkTerr(xCoord, yCoord, 2) == false){
+        else if(checkTerr(xCoord, yCoord, 1) == false){
             alert("Illegal move!");
         }
         //if the move is valid
@@ -107,7 +107,7 @@ function makeMove(x){
         if(check_illegal_move(xCoord, yCoord, checkMove) == 0){
             alert("Illegal move!");
         }
-        else if(checkTerr(xCoord, yCoord, 1) == false){
+        else if(checkTerr(xCoord, yCoord, 2) == false){
             alert("Illegal move!");
         }
         //if the move is valid

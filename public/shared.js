@@ -101,8 +101,6 @@ function init(){
          }
     }
 
-    displayWins();
-
 }
 
 
@@ -380,11 +378,25 @@ function check_illegal_move(x, y, color){
 
 //check if trying to place opposite token in captured territory 
 function checkTerr(x, y, c){
-    if(state.tboard[x][y] == c)
-        return true;
-    if(state.tboard[x][y] == 0)
-        return true;
-    return false;
+     var liberty = 4;
+    //check for white token
+        
+    if(state.board[x+1][y] != 0)
+        liberty--;
+
+    if(state.board[x-1][y] != 0)
+        liberty--;
+      
+    if(state.board[x][y-1] != 0)
+        liberty--;
+   
+    if(state.board[x][y+1] != 0)
+        liberty--;
+   
+    //if territory not surrounded and captured territory does not equal colour
+    if(state.tboard[x][y] == c && liberty == 0)
+        return false;
+    return true;
 }
 
 function capture(x){
