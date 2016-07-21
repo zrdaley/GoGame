@@ -33,7 +33,7 @@ app.get("/login", function(req, res){
 app.get("/move", function(req, res){
 	console.log("GET Request to: /move");
 
-   AIrequest.getRandomMove(Board["size"], Board["board"], Board["last"]["x"],Board["last"]["y"], Board["last"]["c"], Board["last"]["pass"], '/ai/random', function(move){
+   AIrequest.getRandomMove(Board["size"], Board["board"], Board["last"]["x"],Board["last"]["y"], Board["last"]["c"], Board["last"]["pass"], '/ai/random', function(move, err){
         res.json(move);
     });
 
@@ -42,7 +42,7 @@ app.get("/move", function(req, res){
 app.get("/army", function(req, res){
 	console.log("GET Request to: /army");
 
-   AIrequest.getRandomMove(Board["size"], Board["board"], Board["last"]["x"],Board["last"]["y"], Board["last"]["c"], Board["last"]["pass"], '/util/findArmies', function(move){
+   AIrequest.getRandomMove(Board["size"], Board["board"], Board["last"]["x"],Board["last"]["y"], Board["last"]["c"], Board["last"]["pass"], '/util/findArmies', function(move, err){
 
         if(err){
             res.status(500).send();
