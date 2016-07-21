@@ -144,8 +144,10 @@ AIMove.onreadystatechange = function() {
 
             //update board
             var move = JSON.parse(AIMove.responseText);
-            if (move === 400){
-            	alert("Invalid respones from server, something is broken");
+            if (move == 400){
+            	// alert("Invalid respones from server, something is broken");
+                AIMove.open("GET","/move", true);
+                AIMove.send();
             }else if (!move["pass"]){//if AI did not pass
                  //check if legal move
                  if(check_illegal_move(move["x"], move["y"], 1) == 0){
